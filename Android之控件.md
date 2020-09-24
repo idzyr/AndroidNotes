@@ -788,13 +788,13 @@ public class MainActivity extends AppCompatActivity {
 
 ### Chronometer【计时器】
 
-##### 属性
+**属性**
 
 | 属性           | 作用           | 值                                                           |
 | -------------- | -------------- | ------------------------------------------------------------ |
 | android:format | 设置计时器格式 | %s已时分秒格式显式时间【可以加入其它内容保证有时间格式即可】 |
 
-##### 方法
+**方法**
 
 - `getBase()`：返回时间。
 - `setBase(long base)`：设置计时器的起始时间。
@@ -946,7 +946,7 @@ public class MainActivity extends AppCompatActivity {
 
 ### RatingBar【星级评分条】
 
-![device-2019-11-14-001534](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/device-2019-11-14-001534.png)
+<img src="Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/device-2019-11-14-001534.png" alt="device-2019-11-14-001534" style="zoom: 25%;" />
 
 **属性**
 
@@ -988,11 +988,846 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
+### ImageSwitcher【图片切换器】
+
+图片切换有动画效果，继承自ImageView
+
+![imageSwitcher](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/imageSwitcher.gif)
+
+![imageSwitcher1](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/imageSwitcher1.gif)
+
+- 简单图片切换【方法摘要】
+  - `setOutAnimation()` 淡出动画
+  - `setInAnimation()` 淡入动画
+  - `setFactory()` 图像工厂
+  - `setImageResource()` 指定下一张要显式的图片资源
+
+```java
+package top.miku.imgswitched;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.ViewSwitcher;
+
+public class MainActivity extends AppCompatActivity {
+    private ImageSwitcher imageSwitcher;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        //获取控件
+        imageSwitcher = (ImageSwitcher) findViewById(R.id.image_switcher);
+        /*
+        * 设置图片淡出动画【setOutAnimation】方法指定淡出动画
+        * 参数
+        *   AnimationUtils 一个动画程序【这里加载Android自带的】
+        *       参数
+        *           - 一个上下文对象
+        *           - 动画资源【android.R.anim.fade_out】使用Android自带的
+        * */
+        imageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_out));
+        /*
+        * 设置图片淡入动画和淡出动画【setInAnimation】指定淡入动画
+        * 参数基本一直
+        * */
+        imageSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_in));
+        /* 指定一个视图工厂。
+        * 为图片切换器设置要显式的图片资源。
+        * */
+        imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                //实例化一个ImageView控件
+                ImageView imageView = new ImageView(MainActivity.this);
+                imageView.setImageResource(R.mipmap.i03);
+                return imageView;//返回工厂这个对象。
+            }
+        });
+
+        //监听点击事件【注册单击事件】
+        imageSwitcher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //这里传递的view就是imageSwitcher对象，把view强制类型转换后，调用
+                //setImageResource方法指定下一个要展示的图片。
+                ((ImageSwitcher)view).setImageResource(R.mipmap.i04);
+            }
+        });
+    }
+}
+```
+
+- 滑动图片切换【方法摘要】
+  - `motionEvent.getAction()` 获得触发的活动类型。
+  - `MotionEvent.ACTION_DOWN` 开始触摸常量
+  - `MotionEvent.ACTION_UP` 停止/手指抬起触摸常量
+
+```java
+package top.miku.pictureslideview;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.ViewSwitcher;
+
+public class MainActivity extends AppCompatActivity {
+    //存放图片资源
+    private int imageId[] = new int[]{
+      R.mipmap.img01,R.mipmap.img02,R.mipmap.img03,
+      R.mipmap.img04,R.mipmap.img05,R.mipmap.img06,
+      R.mipmap.img07,R.mipmap.img08,R.mipmap.img09,
+    };
+    //存放ImageSwitcher对象
+    private ImageSwitcher is ;
+    //记录图片索引
+    private int imageIndex;
+    //记录手指左右滑动x触摸按下和抬起x坐标。
+    private float touchDownX;
+    private float touchUpX;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏显示
+
+        is = (ImageSwitcher) findViewById(R.id.image_switcher);
+
+        //为ImageSwicher设置Factory，用来为ImageSwicher制造ImageView
+        is.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                //实例化一个image对象，并返回
+                ImageView imageView = new ImageView(MainActivity.this);
+                imageView.setImageResource(imageId[imageIndex]);
+                return imageView;
+            }
+        });
+        //注册触摸事件
+        is.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                //用户触发的活动是触摸按下，条件成立。
+                //motionEvent存放当前触发的活动，通过getAction()方法获得触发的活动类型。
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    //保存左右滑动时手指按下的X坐标
+                    touchDownX = motionEvent.getX();
+                    return true;
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    //取得左右滑动时手指松开的X坐标
+                    touchUpX = motionEvent.getX();
+
+                    Log.d("开始触摸X坐标", ""+touchDownX);
+                    Log.d("停止触摸X坐标", ""+touchUpX);
+                    /*——————————————————图片切换处理——————————*/
+                    //右~左滑动查看下一张【当touchDownX值大于touchUpX就可以证明是右~左滑动】
+                    if (touchDownX - touchUpX > 100){
+                        //限定索引防止数组越界异常
+                        imageIndex = imageIndex == imageId.length - 1 ? imageIndex = 0 : imageIndex + 1;
+
+                        //设置切换动画
+                        //淡入
+                        is.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_in_left));
+                        //淡出
+                        is.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.slide_out_left));
+
+                        //设置当前要看的图片
+                        is.setImageResource(imageId[imageIndex]);
+                        Log.d("图片索引", ""+imageIndex);
+                    } //左~右滑动查看上一张【当touchUpX的值大于touchDownX就可以证明是右~左滑动】
+                    else if (touchUpX - touchDownX >100) {
+                        //限定索引防止数组越界异常
+                        imageIndex = imageIndex == 0 ? imageIndex = imageId.length -1 : imageIndex -1;
+                        //切换动画
+                        //淡入
+                        is.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_in_right));
+                        //淡出
+                        is.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.slide_out_right));
+
+                        //设置上一张查看的图片
+                        is.setImageResource(imageId[imageIndex]);
+                    }
+
+                    return true;
+
+                }
+
+                return true;
+            }
+        });
+
+
+    }
+}
+```
+
+slide_in_left.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+<translate
+    android:fromXDelta="-100%p"
+    android:toXDelta="0"
+    android:duration="1000"/>
+</set>
+```
+
+slide_out_left.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:duration="1000"
+        android:fromXDelta="0"
+        android:toXDelta="-100%p"/>
+
+</set>
+```
+
+slide_in_right.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:duration="1000"
+        android:fromXDelta="100%p"
+        android:toXDelta="0"/>
+
+</set>
+```
+
+slide_out_right.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:duration="1000"
+        android:fromXDelta="0"
+        android:toXDelta="100%p"/>
+</set>
+```
+
+### GridView【网格视图】
+
+图片按行和列形式展示
+
+<img src="Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/Screenshot_1574062908.png" alt="Screenshot_1574062908" style="zoom: 50%;" />
+
+
+
+#### 适配器概念
+
+GridView不同于其它组件要显式图像必须通过一个适配器**Adapter**
+
+![image-20191117221407186](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191117221407186.png)
+
+- 常用适配器实现类
+
+  <img src="Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191117222414173.png" alt="image-20191117222414173" style="zoom:150%;" />
+
+##### SimpleAdapter【简单适配器】使用
+
+- 构造参数
+  - 上下文对象
+  - list对象
+  - 一个布局文件【就是单元格样式xml文件】
+  - 字符串数组【list中的Map中的key名】
+  - 整形数组【单元格模板文件中所指定的组件id】
+- [参考示例](#xml自定义项[SimpleAdapter适配器]])
+
+**属性**
+
+| 属性               | 作用       | 值                        |
+| ------------------ | ---------- | ------------------------- |
+| android:numColumns | 设置表格列 | int或auto_fit【自动排列】 |
+
+**方法**
+
+- `setAdapter();` 添加适配器
+
+**xml自定义项【SimpleAdapter适配器】**
+
+- 添加xml标记【activity_main.xml添加】
+
+  ```xml
+  <?xml version="1.0" encoding="utf-8"?>
+  <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          tools:context=".MainActivity">
+  <!-- GridView组件添加 -->
+      <GridView
+              android:id="@+id/grid_view"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:numColumns="3"/>
+  
+  </androidx.constraintlayout.widget.ConstraintLayout>
+  ```
+
+  
+
+- 定义一个项模板【layout文件夹下创建】
+
+  ```xml
+  <?xml version="1.0" encoding="utf-8"?>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+          android:orientation="vertical" android:layout_width="match_parent"
+          android:layout_height="match_parent">
+      <ImageView
+              android:id="@+id/image"
+              android:layout_width="100dp"
+              android:layout_height="75dp"
+              />
+  
+  </LinearLayout>
+  ```
+
+  
+
+- 编写java文件【Main.class编写】
+
+  ```java
+  package top.miku.testgridview;
+  
+  import androidx.appcompat.app.AppCompatActivity;
+  
+  import android.os.Bundle;
+  import android.widget.GridView;
+  import android.widget.ImageView;
+  import android.widget.SimpleAdapter;
+  
+  import java.util.ArrayList;
+  import java.util.HashMap;
+  import java.util.List;
+  import java.util.Map;
+  
+  public class MainActivity extends AppCompatActivity {
+  
+      //图片资源
+      private int[] imgArr = new int[]{
+              R.mipmap.img01,R.mipmap.img02,R.mipmap.img03,
+              R.mipmap.img04,R.mipmap.img05,R.mipmap.img06,
+              R.mipmap.img07,R.mipmap.img08,R.mipmap.img09
+      };
+  
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          setContentView(R.layout.activity_main);
+          //获取组件
+          GridView gridView = (GridView) findViewById(R.id.grid_view);
+  
+          //创建一个list集合,存放Map类型的元素，用来保存图片资源
+          List<Map<String,Object>> listItem = new ArrayList<>();
+          //给list添加Map资源
+          for (int i = 0; i < imgArr.length; i++) {
+              //实例化一个Map对象
+              Map<String,Object> map = new HashMap<>();
+              //key是image，值是image资源id
+              map.put("image",imgArr[i]);
+              //把map添加到list
+              listItem.add(map);
+          }
+  
+          //创建适配器对象
+          SimpleAdapter simpleAdapter = new SimpleAdapter(
+                  this,
+                  listItem,
+                  R.layout.call,
+                  new String[]{"image"},
+                  new int[]{R.id.image}
+          );
+  
+          //为网格组件添加这个适配器
+          gridView.setAdapter(simpleAdapter);
+  
+  
+      }
+  }
+  
+  ```
+
+##### 不使用xml【BaseAdapter适配器】
+
+- active_layout.xml【添加网格标记】
+
+  ```xaml
+  <?xml version="1.0" encoding="utf-8"?>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          tools:context=".MainActivity"
+          android:orientation="vertical">
+      <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="20sp"
+              android:text="2019年11月18日"/>
+      <!-- 添加标记 -->
+      <GridView
+              android:id="@+id/grid_view"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:numColumns="auto_fit"
+              />
+  
+  
+  
+  </LinearLayout>
+  ```
+
+- 编写java文件编写一个自定义适配器类
+
+  ```java
+  package top.miku.qqpictureslideview;
+  
+  import androidx.appcompat.app.AppCompatActivity;
+  
+  import android.content.Context;
+  import android.os.Bundle;
+  import android.view.View;
+  import android.view.ViewGroup;
+  import android.widget.BaseAdapter;
+  import android.widget.GridView;
+  import android.widget.ImageView;
+  
+  public class MainActivity extends AppCompatActivity {
+      //图片资源
+      private int[] imgArr = new int[]{
+              R.mipmap.img01,R.mipmap.img02,R.mipmap.img03,
+              R.mipmap.img04,R.mipmap.img05,R.mipmap.img06,
+              R.mipmap.img07,R.mipmap.img08,R.mipmap.img09
+      };
+  
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          setContentView(R.layout.activity_main);
+  
+          //获取组件
+          GridView gridView = (GridView) findViewById(R.id.grid_view);
+          //指定适配器
+          gridView.setAdapter(new ImageAdapter(this));
+  
+      }
+  //内部类继承BaseAdapter类
+      public class ImageAdapter extends BaseAdapter{
+          private Context mContext; //存放调用者传递的上下文
+  
+          //创建一个构造函数
+          public ImageAdapter(Context context){
+              mContext = context; //把实例化传递的上下文保存下来。
+          };
+  
+          //计数
+          @Override
+          public int getCount() {
+              return imgArr.length;
+          }
+  
+          @Override
+          public Object getItem(int i) {
+              return null;
+          }
+  
+          @Override
+          public long getItemId(int i) {
+              return 0;
+          }
+  
+          @Override
+          public View getView(int i, View view, ViewGroup viewGroup) {
+              ImageView imageView; //存放要显式的imageView组件。
+              //判断传过来的值是否为空
+              if(view==null){
+                  //创建ImageView组件
+                  imageView=new ImageView(mContext);
+                  //为组件设置宽高
+                  imageView.setLayoutParams(new GridView.LayoutParams(100, 90));
+                  //选择图片铺设方式
+                  imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+  
+              }else{
+                  imageView= (ImageView)view; //否则就等于传递过来的view
+              }
+              //将获取图片放到ImageView组件中
+              //指定图片资源id，通过图片数组指定，这里的i就是当前项的index正好对应图片数组长度。
+              imageView.setImageResource(imgArr[i]);
+  
+              return imageView; //返回这个imageView对象。
+          }
+      }
+  
+  }
+  
+  ```
 
 
 
 
+### Spinner【下拉列表】
 
+![image-20191118211550936](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191118211550936.png)
+
+##### 属性
+
+| 属性            | 作用   | 值                         |
+| --------------- | ------ | -------------------------- |
+| android:entries | 列表项 | 一个xml数组@values下的文件 |
+
+##### xml数组形式添加列表项
+
+![image-20191118193346009](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191118193346009.png)
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="str">
+        <item>Windows</item>
+        <item>Linux</item>
+        <item>MacOS</item>
+    </string-array>
+</resources>
+
+```
+
+到布局中使用android:entries属性指定上面的xml文件。
+
+#### 通过适配器指定
+
+- `ArrayAdapter<E>` 数组适配器
+  - 构造参数
+    1. 一个上下文对象
+    2. 列表项的样式
+    3. 一个数组资源
+
+```java
+package top.miku.testspinner;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        //一些数组资源
+        String[] str = new String[] {
+                "android","ios","flymeOS","miui"
+        };
+
+        //实例一个数组适配器
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                str);
+
+        //指定下拉列表的样式
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        //指定一个适配器
+        spinner.setAdapter(arrayAdapter);
+
+
+    }
+}
+
+```
+
+**事件监听**
+
+```java
+spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            //选中项改变时执行
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                //获得当前选择的项，
+                //adapterView中存放者适配器的资源数组
+                //getItemAtPosition通过索引获取项
+                //i是当前选中项的索引
+                String str = adapterView.getItemAtPosition(i).toString();
+                Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+
+            }
+
+            //当列表项没内容时执行
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+```
+
+### ScrollView【垂直滚动视图】
+
+内容溢出后自动显式滚动条
+
+![image-20191119135002242](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191119135002242.png)
+
+![image-20191119135742988](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191119135742988.png)
+
+#### HorizontalScrollView【水平滚动视图】
+
+通过HorizontalScrollView标记改为水平滚动视图
+
+**注意事项**
+
+一个滚动视图中只能放至一个组件。如果需要放至多个组件可以使用布局管理器包裹。
+
+**xml文件添加滚动视图**
+
+- 垂直滚动视图
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+    <!-- 添加标记 -->
+<ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/str"
+            android:textSize="30sp"/>
+</ScrollView>
+</RelativeLayout>
+```
+
+- 水平滚动视图
+
+  ```xml
+  <?xml version="1.0" encoding="utf-8"?>
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          tools:context=".MainActivity">
+  <!-- 添加标记 -->
+  <HorizontalScrollView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+      <TextView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:text="@string/str"
+              android:textSize="30sp"/>
+  </HorizontalScrollView>
+  </RelativeLayout>
+  ```
+
+**java代码添加**
+
+```java
+package top.miku.testscrollview;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        //获得要添加滚动视图的组件
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.java_scroll_view);
+
+        //创建滚动视图
+        ScrollView scrollView = new ScrollView(MainActivity.this);
+        //创建一个要往滚动视图下的组件
+        TextView textView = new TextView(MainActivity.this);
+        //为TextView设置一些属性
+        textView.setText(R.string.str);
+        textView.setTextSize(30);
+
+        //把TextView添加到scrollView中
+        scrollView.addView(textView);
+
+        //把scrollView添加到RootView中
+
+        linearLayout.addView(scrollView);
+
+    }
+}
+
+```
+
+### TabHost【选项卡】
+
+![tabhost](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/tabhost.gif)
+
+创建流程图
+
+![image-20191119144610152](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191119144610152.png)
+
+- activity_main.xml活动布局添加必要组件
+
+  - 根节点使用TabHost标记设置id为Android内置id `@android:id/tabhost`
+  - 使用一个布局容器包裹TabWidget标记和tabcontent标记【以LinearLayout为例】
+  - TabWidget标记设置id为Android内置id`@android:id/tabs`
+  - tabcontent没有对应的布局这里用其它布局代替【FrameLayout】将该标记的id设置为安卓内置id`@android:id/tabcontent`
+
+  ```xml
+  <?xml version="1.0" encoding="utf-8"?>
+  <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          tools:context=".MainActivity"
+          android:id="@android:id/tabhost">
+  
+      <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              >
+          <TabWidget
+                  android:id="@android:id/tabs"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"/>
+          <FrameLayout
+                  android:id="@android:id/tabcontent"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"/>
+      </LinearLayout>
+  
+  
+  </TabHost>
+  ```
+
+- 编写各标签页的布局xml，需要几个标签就编写几个,并为布局的根组件设置一个id【放到R/layout文件夹下】
+
+  - 示例tab1
+
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/left">
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/biaoqing_left"/>
+    </LinearLayout>
+    ```
+
+    
+
+  - 示例tab2
+
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/right">
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/biaoqing_right"/>
+    </LinearLayout>
+    ```
+
+- 获取并初始化TabHost
+
+- 为TabHost添加标签页
+
+  - 综合java代码
+
+```java
+  package top.miku.wechattab;
+  
+  import androidx.appcompat.app.AppCompatActivity;
+  
+  import android.os.Bundle;
+  import android.view.LayoutInflater;
+  import android.widget.TabHost;
+  
+  public class MainActivity extends AppCompatActivity {
+  
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          setContentView(R.layout.activity_main);
+  /*——————————————————— 获取并初始化TabHost ——————————————————————————————*/
+          //获得选项卡对象
+          TabHost tabHost = findViewById(android.R.id.tabhost);
+          //初始化
+          tabHost.setup();
+  
+  
+          //实例化一个LayoutInflater
+          //通过LayoutInflater.from()方法获取改对象实例，参数为上下文对象。
+          LayoutInflater inflater = LayoutInflater.from(this);
+          //加载布局文件
+          //通过inflate方法加载
+          //参数1.选项卡下的内容布局文件。参数2.TabContentView对象。通过选项卡对象的getTabContentView方法获得
+          inflater.inflate(R.layout.tab1,tabHost.getTabContentView());
+          inflater.inflate(R.layout.tab2,tabHost.getTabContentView());
+          
+  /*———————————— 为TabHost添加标签页 ——————————————————————————————*/
+          
+          //往选项卡中添加标签页布局
+          /*
+          * newTabSpec()创建一个新的标签并添加一个标记【标记名随意】
+          * setIndicator()给新标签添加标签名
+          * setContent()给新标签添加内容【事先定义的标签页布局中的root标记的id】
+          * */
+          tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("精选表情").setContent(R.id.left));
+          tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("投稿表情").setContent(R.id.right));
+  
+      }
+  }
+  
+```
+
+
+### ViewFlipper
+
+用来控制多个组件之间以动画形式展示
 
 
 
