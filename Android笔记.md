@@ -4,11 +4,7 @@
 
 ### XML
 
-## 介绍
-
-### 系统结构
-
-## 介绍
+## Android摘要
 
 ### 系统架构
 
@@ -732,6 +728,8 @@ Activity类中提供了一个`startActivity()` 方法，这个方法是专门用
 
 
 
+## UI布局
+
 
 
 
@@ -741,6 +739,12 @@ Activity类中提供了一个`startActivity()` 方法，这个方法是专门用
 ## 常用控件
 
 详细见；[Android之控件](./Android之控件.md)
+
+
+
+
+
+
 
 ## AS使用技巧
 
