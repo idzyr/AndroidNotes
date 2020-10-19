@@ -744,6 +744,26 @@ Activity类中提供了一个`startActivity()` 方法，这个方法是专门用
 
 
 
+## AS中的Activity
+
+
+
+
+
+
+
+
+
+## Android中的HTTP
+
+详细见：[Android中的HTTP](./Android中的HTTP.md)
+
+
+
+
+
+
+
 
 
 ## AS使用技巧
