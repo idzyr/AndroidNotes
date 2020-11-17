@@ -191,7 +191,7 @@ btnCheckSelfPermission.setOnClickListener(new View.OnClickListener() {
 
 效果展示；
 
-![permission_demo](App%E6%9D%83%E9%99%90-images/permission_demo.gif)
+![permission_demo](images/permission_demo.gif)
 
 ## 第三方库
 

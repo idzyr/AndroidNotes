@@ -1,0 +1,9 @@
+.gitbook-link {
+    display: none !important;
+}
+.header{
+    border-top: 1px #0099CC dotted;
+}
+tr>th{
+    color: #202124;
+}

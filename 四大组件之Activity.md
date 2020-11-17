@@ -14,25 +14,25 @@
 
   启动AS，在欢迎界面。选择启动新的AS项目。
 
-  ![1566199434812](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/1566199434812-1600785160710.png)
+  ![1566199434812](images/1566199434812-1600785160710.png)
 
 - 不带活动
 
-  ![1566376899383](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/1566376899383.png)
+  ![1566376899383](images/1566376899383.png)
 
 - 配置项目
 
-  ![1566376994556](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/1566376994556.png)
+  ![1566376994556](images/1566376994556.png)
 
 - 在`app/src/main/java/top.miku.activitytest`创建一个活动
 
   1. 依次选择
 
-  ![1566377890271](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/1566377890271.png)
+  ![1566377890271](images/1566377890271.png)
 
 1. 这里暂时不创建布局文件
 
-   ![1566378042599](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/1566378042599.png)
+   ![1566378042599](images/1566378042599.png)
 
 项目中的任何活动都应该重写Activity的`onCreate()`方法，而目前我们的FirstActivity中已经重写了这个方法，这是由Android Studio自动帮我们完成的，代码如下所示：
 
@@ -56,13 +56,13 @@ public class FirstActivity extends AppCompatActivity {
 
 - 在`app/src/main/res`目录创建layout目录
 
-  ![1566378655820](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/1566378655820.png)
+  ![1566378655820](images/1566378655820.png)
 
 - 接着在layout目录下创建first_layout.xml
 
-  ![1566378864402](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/1566378864402.png)
+  ![1566378864402](images/1566378864402.png)
 
-![1566378922750](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/1566378922750.png)
+![1566378922750](images/1566378922750.png)
 
 - 编辑布局文件，添加一个button
 
@@ -138,13 +138,13 @@ public class FirstActivity extends AppCompatActivity {
 
 1. 在包下创建一个class并继承AppCompatActivity
 
-   ![1568437173840](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/1568437173840.png)
+   ![1568437173840](images/1568437173840.png)
 
-   ![1568437302736](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/1568437302736-1600847401228.png)
+   ![1568437302736](images/1568437302736-1600847401228.png)
 
 2. 在layout文件下新建布局文件。
 
-   ![1568437408702](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/1568437408702.png)
+   ![1568437408702](images/1568437408702.png)
 
 3. 到class中去重写protected void onCreate(Bundle bundle)方法
 
@@ -179,7 +179,7 @@ public class FirstActivity extends AppCompatActivity {
 
 ## 启动活动
 
-![image-20191119204959631](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/image-20191119204959631.png)
+![image-20191119204959631](images/image-20191119204959631.png)
 
 Activity有两种启动方式，一是作为app的主activity启动。二是被其他activity启动。
 
@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
 
 > Bundle类参考https://developer.android.google.cn/reference/android/os/Bundle?hl=en
 
-![image-20191120143224571](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/image-20191120143224571.png)
+![image-20191120143224571](images/image-20191120143224571.png)
 
 **方法**
 
@@ -358,7 +358,7 @@ public class Main2Activity extends AppCompatActivity {
 
 调用另一个Activity并返回数据给调用者【上一个Activity】
 
-![IntentBundle](%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-images/IntentBundle.gif)
+![IntentBundle](images/IntentBundle.gif)
 
 xml布局
 

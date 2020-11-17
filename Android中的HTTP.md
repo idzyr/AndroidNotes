@@ -22,7 +22,7 @@ okHTTTP 扮演者一个浏览器的角色。
 
 **基本使用流程；**
 
-![image-20201016193348136](Android%E4%B8%AD%E7%9A%84HTTP-images/image-20201016193348136.png)
+![image-20201016193348136](images/image-20201016193348136.png)
 
 1.  创建OkHttpClient
 2.  创建请求内容
@@ -130,7 +130,7 @@ implementation 'com.squareup.okio:okio:1.17.5"
 
   - 重载
 
-    ![img](Android%E4%B8%AD%E7%9A%84HTTP-images/595349-c61b43dbeaad1f27.png)
+    ![img](images/595349-c61b43dbeaad1f27.png)
 
 以下是其实现类。
 
@@ -509,6 +509,91 @@ OkHttpClient mClient = new OkHttpClient.Builder()
 
 
 
+### 注意事项
+
+1. `response.body().string();` 方法只可以调用一次，第二次调用会抛出流关闭异常。
+
+
+
+
+
+### 二次封装
+
+```java
+package com.xuelingmiao.archivingassistant.util.manage;
+
+import android.content.Intent;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Callback;
+import okhttp3.OkHttp;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+public class IntentMange {
+    private static OkHttpClient mClient;
+
+    private IntentMange() {
+    }
+
+
+    /**
+     * 获取OkHttpClient客户端
+     *
+     * @return
+     */
+
+    public static OkHttpClient getOkHttpClient() {
+
+        if (mClient != null) {
+            return mClient;
+        } else {
+            mClient = new OkHttpClient.Builder()
+                    .callTimeout(6000, TimeUnit.MILLISECONDS) //会话超时
+                    .connectTimeout(6000, TimeUnit.MILLISECONDS) //连接超时
+                    .readTimeout(20000, TimeUnit.MILLISECONDS) //读取超时
+                    .writeTimeout(20000, TimeUnit.MILLISECONDS) //连接超时
+                    .build();
+            return mClient;
+        }
+
+    }
+
+    /**
+     * 异步发送GET请求
+     * @param url url地址
+     * @param callback 回调接口
+     */
+    public static void sendAsyncGetRequest(String url, Callback callback) {
+        OkHttpClient mClient = getOkHttpClient();
+        Request request = new Request.Builder().get().url(url).build();
+        mClient.newCall(request).enqueue(callback);
+
+    }
+
+    /**
+     * 同步发送GET请求
+     * @param url 请求地址
+     * @return 返回请求结果
+     * @throws IOException
+     */
+    public static String sendSyncGetRequest(String url) throws IOException {
+        OkHttpClient mClient = getOkHttpClient();
+        Request request = new Request.Builder().get().url(url).build();
+        Response response = mClient.newCall(request).execute();
+        String message = response.body().string();
+        return message ;
+    }
+
+}
+
+```
+
+
+
 
 
 ### 附录
@@ -516,6 +601,8 @@ OkHttpClient mClient = new OkHttpClient.Builder()
 **HTTP Content-type对照表**
 
 https://tool.oschina.net/commons
+
+
 
 
 

@@ -178,11 +178,11 @@ button是最常用的交互控件。通常用来绑定一个事件来触发，�
 
 - 在R/drawable文件夹下新建一个Drawable resource file文件
 
-  ![1567349656071](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/1567349656071.png)
+  ![1567349656071](images/1567349656071.png)
 
 - 设置文件名和更元素为shape
 
-  ![1567349751534](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/1567349751534.png)
+  ![1567349751534](images/1567349751534.png)
 
   
 
@@ -232,7 +232,7 @@ button是最常用的交互控件。通常用来绑定一个事件来触发，�
 
 - 在R/drawable文件夹下新建一个Drawable resource file文件根元素设置为selector
 
-  ![1567401804477](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/1567401804477.png)
+  ![1567401804477](images/1567401804477.png)
 
   - <item>样式</item>常用属性///当按钮发生指定事件后样式
 
@@ -339,7 +339,7 @@ public class MyEditText extends AppCompatActivity implements View.OnClickListene
 
 ### RadioButton【单选按钮】
 
-##### ![1567406274266](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/1567406274266.png)
+##### ![1567406274266](images/1567406274266.png)
 
 长用于性别的选择，要集合`<RadioGroup></RadioGroup>`打组使用
 
@@ -387,7 +387,7 @@ public class MyRadioButton extends AppCompatActivity {
 
 ### CheckBox【复选框】
 
-![1567429879885](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/1567429879885.png)
+![1567429879885](images/1567429879885.png)
 
 **作用**
 
@@ -602,7 +602,7 @@ public class MyImageView extends AppCompatActivity {
 
 ProgressBar用于在界面上显示一个进度条
 
-![image-20191113213033992](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191113213033992.png)
+![image-20191113213033992](images/image-20191113213033992.png)
 
 ##### 属性
 
@@ -750,7 +750,7 @@ public class MainActivity extends AppCompatActivity {
 
 ### TimePicker【时间选择器】
 
-![Screenshot_1573484495](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/Screenshot_1573484495.png)
+![Screenshot_1573484495](images/Screenshot_1573484495.png)
 
 **事件**
 
@@ -889,7 +889,7 @@ public class MainActivity extends AppCompatActivity {
 
 是进度条的子类。所以支持其父类的属性。
 
-![Screenshot_1573658579](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/Screenshot_1573658579-1573658682489.png)
+![Screenshot_1573658579](images/Screenshot_1573658579-1573658682489.png)
 
 **属性；**
 
@@ -946,7 +946,7 @@ public class MainActivity extends AppCompatActivity {
 
 ### RatingBar【星级评分条】
 
-<img src="Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/device-2019-11-14-001534.png" alt="device-2019-11-14-001534" style="zoom: 25%;" />
+<img src="images/device-2019-11-14-001534.png" alt="device-2019-11-14-001534" style="zoom: 25%;" />
 
 **属性**
 
@@ -992,9 +992,9 @@ public class MainActivity extends AppCompatActivity {
 
 图片切换有动画效果，继承自ImageView
 
-![imageSwitcher](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/imageSwitcher.gif)
+![imageSwitcher](images/imageSwitcher.gif)
 
-![imageSwitcher1](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/imageSwitcher1.gif)
+![imageSwitcher1](images/imageSwitcher1.gif)
 
 - 简单图片切换【方法摘要】
   - `setOutAnimation()` 淡出动画
@@ -1228,7 +1228,7 @@ slide_out_right.xml
 
 图片按行和列形式展示
 
-<img src="Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/Screenshot_1574062908.png" alt="Screenshot_1574062908" style="zoom: 50%;" />
+<img src="images/Screenshot_1574062908.png" alt="Screenshot_1574062908" style="zoom: 50%;" />
 
 
 
@@ -1236,11 +1236,11 @@ slide_out_right.xml
 
 GridView不同于其它组件要显式图像必须通过一个适配器**Adapter**
 
-![image-20191117221407186](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191117221407186.png)
+![image-20191117221407186](images/image-20191117221407186.png)
 
 - 常用适配器实现类
 
-  <img src="Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191117222414173.png" alt="image-20191117222414173" style="zoom:150%;" />
+  <img src="images/image-20191117222414173.png" alt="image-20191117222414173" style="zoom:150%;" />
 
 ##### SimpleAdapter【简单适配器】使用
 
@@ -1489,7 +1489,7 @@ GridView不同于其它组件要显式图像必须通过一个适配器**Adapter
 
 ### Spinner【下拉列表】
 
-![image-20191118211550936](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191118211550936.png)
+![image-20191118211550936](images/image-20191118211550936.png)
 
 ##### 属性
 
@@ -1499,7 +1499,7 @@ GridView不同于其它组件要显式图像必须通过一个适配器**Adapter
 
 ##### xml数组形式添加列表项
 
-![image-20191118193346009](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191118193346009.png)
+![image-20191118193346009](images/image-20191118193346009.png)
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -1590,9 +1590,9 @@ spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
 内容溢出后自动显式滚动条
 
-![image-20191119135002242](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191119135002242.png)
+![image-20191119135002242](images/image-20191119135002242.png)
 
-![image-20191119135742988](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191119135742988.png)
+![image-20191119135742988](images/image-20191119135742988.png)
 
 #### HorizontalScrollView【水平滚动视图】
 
@@ -1695,11 +1695,11 @@ public class MainActivity extends AppCompatActivity {
 
 ### TabHost【选项卡】
 
-![tabhost](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/tabhost.gif)
+![tabhost](images/tabhost.gif)
 
 创建流程图
 
-![image-20191119144610152](Android%E4%B9%8B%E6%8E%A7%E4%BB%B6-images/image-20191119144610152.png)
+![image-20191119144610152](images/image-20191119144610152.png)
 
 - activity_main.xml活动布局添加必要组件
 
@@ -1828,6 +1828,655 @@ public class MainActivity extends AppCompatActivity {
 ### ViewFlipper
 
 用来控制多个组件之间以动画形式展示
+
+
+
+## RecyclerView
+
+一个更强大的列表试图控件。支持传统的ListView和GridView视图，也支持瀑布流效果。
+
+
+
+### 实现ListView效果
+
+#### 普通ListViewUI
+
+<img src="images/image-20201112163751304.png" alt="image-20201112163751304" style="zoom:50%;" />
+
+**步骤零；**
+
+布局文件添加`recyclerview`控件。并从java后台获取控件
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+<!--   添加recyclerview -->
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+</RelativeLayout>
+```
+
+- 获取控件. 
+
+````java
+findViewById(R.id.recycler_view);
+````
+
+**步骤一；**
+
+准备模拟数据。
+
+- 装备一个条目Bean类，
+
+  ```java
+  package com.xuelingmiao.recyclertest.bean;
+  
+  public class ItemBean {
+      public int image;
+      public String title;
+  }
+  
+  ```
+
+- 准备数据源，就是Bean类所需要的数据。这里使用数组来模拟。
+
+  ```java
+  package com.xuelingmiao.recyclertest.bean;
+  
+  import com.xuelingmiao.recyclertest.R;
+  
+  public class Datas {
+      //图片数组
+      public static int[] picArray = new int[]{
+              R.mipmap.pic_1,
+              R.mipmap.pic_2,
+              R.mipmap.pic_3,
+              R.mipmap.pic_4,
+              R.mipmap.pic_5,
+              R.mipmap.pic_6,
+              R.mipmap.pic_7,
+              R.mipmap.pic_8,
+              R.mipmap.pic_9,
+              R.mipmap.pic_10,
+              R.mipmap.pic_11,
+      };
+  
+      //tile 数组
+      public static String[] titleArray = new String[]{
+              "妲己",
+              "孙尚香",
+              "武则天",
+              "安其拉",
+              "王昭君",
+              "不知火舞",
+              "娜可露露",
+              "大乔",
+              "公孙离",
+              "伽罗",
+              "小乔",
+      };
+  }
+  
+  ```
+
+- 装填数据,把数据添加到Bean类
+
+  ```java
+  /**
+       * 准备模拟数据
+       */
+      private void initData (){
+          /*----------装填数据-------------------*/
+          beanList = new ArrayList<>();
+          int length = Datas.picArray.length;
+          for (int i = 0; i < length; i++) {
+              ItemBean itemBean = new ItemBean();
+              itemBean.image = Datas.picArray[i];
+              itemBean.title = Datas.titleArray[i];
+              beanList.add(itemBean);
+          }
+      }
+  ```
+
+  
+
+**步骤二；**
+
+创建适配器
+
+1. 创建一个类继承`RecyclerView.Adapter`,泛型为`ListViewAdapter.InnerHolder`类型。的适配器类。
+
+   ```java
+   public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.InnerHolder> {
+       
+       ……
+       
+   }
+   ```
+
+   
+
+2. 创建 `InnerHolder ` 内部类，继承子`RecyclerView.ViewHolder`,并创建`public InnerHolder(@NonNull View itemView)` 构造方法
+
+   ```java
+    public class InnerHolder extends RecyclerView.ViewHolder {
+   
+           public InnerHolder(@NonNull View itemView) {
+               super(itemView);
+           }
+   }
+   
+   ```
+
+   
+
+3. 重写以下三个方法
+
+   - `public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)` 用于创建适配器类内部的holder类的。
+   - `public void onBindViewHolder(@NonNull InnerHolder holder, int position)` 绑定适配器类内部的Holder类。一般用于设置数据的。
+   - `public int getItemCount()` 返回总条目数
+
+   ```java
+       /**
+        * 用于创建条目的View，实际就是返回内部类的InnerHolder类。
+        * @param parent
+        * @param viewType
+        * @return
+        */
+       @NonNull
+       @Override
+       public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+           return null;
+       }
+   
+   /**
+        * 绑定适配器类内部的Holder类。一般用于设置数据的。
+        * @param holder
+        * @param position
+        */
+       @Override
+       public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
+   
+       }
+   
+       /**
+        * 返回条目个数
+        * @return
+        */
+       @Override
+       public int getItemCount() {
+           return 0;
+       }
+   ```
+
+   
+
+4. 创建适配器类的构造方法。
+
+   ```java
+   public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.InnerHolder> {
+      
+       private final List<ItemBean> mData;
+       //构造方法
+   	public ListViewAdapter(List<ItemBean> data){
+           this.mData = data;
+       }
+       
+   } 
+   
+   ```
+
+5. 处理适配器类的`getItemCount` 方法
+
+   ```java
+   /**
+        * 返回总条目数
+        * @return
+        */
+       @Override
+       public int getItemCount() {
+          	//返回条目数
+           if (mData != null) {
+               return mData.size();
+           }
+           return 0;
+       }
+   ```
+
+6. 处理适配器类的`onCreateViewHolder`方法
+
+   - 准备条目UI的l布局xml文件（item_list_veiw.xml）。
+
+     ![image-20201112152409772](images/image-20201112152409772.png)
+
+     ```xml
+     <?xml version="1.0" encoding="utf-8"?>
+     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="60dp">
+         <ImageView
+                 android:id="@+id/itme_list_pic"
+                 android:layout_width="60dp"
+                 android:layout_height="60dp"
+                 android:src="@mipmap/pic_1"
+                 android:layout_marginLeft="5dp"/>
+         <TextView
+                 android:id="@+id/itme_list_title"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="妲己"
+                 android:textSize="20sp"
+                 android:layout_toRightOf="@+id/itme_list_pic"
+                 android:layout_centerVertical="true"
+                 android:layout_marginLeft="10dp"
+                 />
+     
+     </RelativeLayout>
+     ```
+
+   - 创建并返回内部的InnerHolder对象
+
+     ```java
+         /**
+          * 用于创建条目的View，实际就是返回内部类的InnerHolder类。
+          * @param parent
+          * @param viewType
+          * @return
+          */
+         @NonNull
+         @Override
+         public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+             //构建itemView对象
+             View view = View.inflate(parent.getContext(), R.layout.item_list_veiw,null);
+             // 传入构建的View
+             return new InnerHolder(
+                 view);
+         }
+     ```
+
+7. 处理适配器类中的`onBindViewHolder`方法
+
+   - 从适配器内部类的构造方法中查找条目中要变更数据的控件。并设置为全局变量
+
+     ```java
+     public class InnerHolder extends RecyclerView.ViewHolder {
+     		// 要变更数据的控件
+             private ImageView pic;
+             private TextView title;
+     
+             public InnerHolder(@NonNull View itemView) {
+                 super(itemView);
+                 //查找条目控件
+                 pic = itemView.findViewById(R.id.itme_list_pic);
+                 title = itemView.findViewById(R.id.itme_list_title);
+             }
+     
+       
+     
+     	}
+     ```
+
+     
+
+   - 从适配器内部类中创建`setData()` 方法，用来设置数据，形参类型为条目Bean类型，这里就是我们前边创建的ItemBean类。为查找到的控件设置数据。
+
+     ```java
+     /**
+              * 设置数据方法
+              *
+              * @param itemBean 数据源Bean类对象
+              */
+             public void setData(ItemBean itemBean) {
+                 //开始设置数据
+                 mPic.setImageResource(itemBean.image);
+                 mTitle.setText(itemBean.title);
+             }
+     ```
+
+   - 到适配器类的`onBindViewHolder`方法去调用此设置方法。
+
+     ```java
+      /**
+          * 绑定适配器类内部的Holder类。一般用于设置数据的。
+          *
+          * @param holder 
+          * @param position
+          */
+         @Override
+         public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
+             //设置数据
+             holder.setData(mData.get(position));
+     
+         }
+     ```
+
+   适配器类完整代码参考；
+
+   ```java
+   package com.xuelingmiao.recyclertest.adapter;
+   
+   import android.view.View;
+   import android.view.ViewGroup;
+   import android.widget.ImageView;
+   import android.widget.TextView;
+   
+   import androidx.annotation.NonNull;
+   import androidx.recyclerview.widget.RecyclerView;
+   
+   import com.xuelingmiao.recyclertest.R;
+   import com.xuelingmiao.recyclertest.bean.ItemBean;
+   
+   import java.util.List;
+   
+   public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.InnerHolder> {
+   
+       private final List<ItemBean> mData;
+   
+       public ListViewAdapter(List<ItemBean> data) {
+           this.mData = data;
+       }
+   
+       /**
+        * 用于创建条目的View，实际就是返回内部类的InnerHolder类。
+        *
+        * @param parent
+        * @param viewType
+        * @return
+        */
+       @NonNull
+       @Override
+       public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+           //构建itemView对象
+           View view = View.inflate(parent.getContext(), R.layout.item_list_veiw, null);
+           // 传入构建的View
+           return new InnerHolder(view);
+       }
+   
+       /**
+        * 绑定适配器类内部的Holder类。一般用于设置数据的。
+        *
+        * @param holder
+        * @param position
+        */
+       @Override
+       public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
+           //设置数据
+           holder.setData(mData.get(position));
+   
+       }
+   
+       /**
+        * 返回总条目数
+        *
+        * @return
+        */
+       @Override
+       public int getItemCount() {
+           if (mData != null) {
+               return mData.size();
+           }
+           return 0;
+       }
+   
+       public class InnerHolder extends RecyclerView.ViewHolder {
+   
+           private ImageView mPic;
+           private TextView mTitle;
+   
+           public InnerHolder(@NonNull View itemView) {
+               super(itemView);
+               //查找条目控件
+               mPic = itemView.findViewById(R.id.itme_list_pic);
+               mTitle = itemView.findViewById(R.id.itme_list_title);
+           }
+   
+           /**
+            * 设置数据方法
+            *
+            * @param itemBean 数据源Bean类对象
+            */
+           public void setData(ItemBean itemBean) {
+               //开始设置数据
+               mPic.setImageResource(itemBean.image);
+               mTitle.setText(itemBean.title);
+           }
+   
+       }
+   }
+   
+   ```
+
+**步骤三；**
+
+为RecyclerView设置样式，有`RecyclerView.LayoutManager` 抽象类来管理，其实现类如下图，分别对应这ListView布局GridView布局和瀑布流布局。. 
+
+![image-20201112163044565](images/image-20201112163044565.png)
+
+```java
+ /**
+     * 准备模拟数据
+     */
+    private void initData (){
+        /*----------装填数据-------------------*/
+			.....
+        /*-----------设置布局管理器也就是RecyclerView样式---------------------------*/
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+        //设置布局管理器
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+    }
+```
+
+**步骤四；**
+
+5. 使用适配器
+
+   ```java
+       /**
+        * 准备模拟数据
+        */
+       private void initData (){
+           /*----------装填数据-------------------*/
+        		……
+           /*-------------创建适配器-------------------------*/
+           // 实例化适配器
+           ListViewAdapter mListViewAdapter = new ListViewAdapter(beanList);
+           
+       }
+   ```
+
+6. 为RecyclerView设置适配器。
+
+     ```java
+         /**
+          * 准备模拟数据
+          */
+         private void initData (){
+             /*----------装填数据-------------------*/
+            	......
+             /*-------------创建适配器-------------------------*/
+             // 实例化适配器
+             .....
+             //设置适配器
+             mRecyclerView.setAdapter(mListViewAdapter);
+         }
+     ```
+
+   - 在MainActivity的`onCreate` 方法内调用`initData()`方法。
+
+     ```java
+      @Override
+         protected void onCreate(Bundle savedInstanceState) {
+             super.onCreate(savedInstanceState);
+             setContentView(R.layout.activity_main);
+     
+             //查找控件
+             mRecyclerView = findViewById(R.id.recycler_view);
+     		//调用初始数据方法。
+             initData();
+     
+         }
+     ```
+
+#### 控制显示方式
+
+通过LinearLayoutManager类的方法来改变。
+
+- `setOrientation(@RecyclerView.Orientation int orientation)` 设置显示方向
+  - 参数
+  - `int orientation`  
+    - `LinearLayoutManager.HORIZONTAL` 水平显示。
+    - `LinearLayoutManager.VERTICAL` 垂直显示
+- `setReverseLayout(boolean reverseLayout)` 是否反向显示
+  - 参数
+    - `boolean reverseLayout`
+      - true 反向显示
+      - false 不反向显示
+
+**参考示例；**
+
+```java
+ /**
+     * 以LIstView方式显示
+     * @param isVertical 是否水平显示
+     * @param isReverse 是否反向显示
+     */
+    private void showList(boolean isVertical,boolean isReverse) {
+        /*-----------设置布局管理器也就是RecyclerView样式---------------------------*/
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+        //设置显示方向
+        linearLayoutManager.setOrientation(isVertical ? LinearLayoutManager.VERTICAL : LinearLayoutManager.HORIZONTAL);
+        //是否反向显示
+        linearLayoutManager.setReverseLayout(isReverse);
+        //设置布局管理器
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        /*-------------创建适配器-------------------------*/
+        // 实例化适配器
+        ListViewAdapter mListViewAdapter = new ListViewAdapter(beanList);
+        //设置适配器
+        mRecyclerView.setAdapter(mListViewAdapter);
+    }
+```
+
+
+
+<img src="images/recycler_list_demo.gif" alt="recycler_list_demo" style="zoom:50%;" />
+
+
+
+#### 条目分割线
+
+<img src="images/image-20201112205922048.png" alt="image-20201112205922048" style="zoom:50%;" />
+
+使用CardView控件来完成。
+
+打开条目布局文件。使用CardView控件包裹之前的布局。
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--   CardView -->
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardUseCompatPadding="true"
+            android:background="#cccccc">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
+
+            <ImageView
+                    android:id="@+id/itme_list_pic"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/pic_1" />
+
+            <TextView
+                    android:id="@+id/itme_list_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/itme_list_pic"
+                    android:text="妲己"
+                    android:textSize="20sp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
+```
+
+**属性；**
+
+- `app:cardUseCompatPadding="true"` 是否使用兼容填充
+
+
+
+### 实现GridView效果
+
+在ListVIew 的基础上只需更改RecyclerView的LayoutManager的方式即可。
+
+**GridLayoutManager构造方法**
+
+- `public GridLayoutManager(Context context, int spanCount)`
+  - 参数
+    - `Context context` 上上下文
+    - `int spanCount`  显示列数
+
+```java
+ /*-----------设置布局管理器也就是RecyclerView样式为GridVIew---------------------------*/
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this,2);
+        //设置布局管理器
+        mRecyclerView.setLayoutManager(gridLayoutManager);
+```
+
+#### 控制显示方式
+
+设置方式也是通过 GridLayoutManager的`setOrientation()`和`setReverseLayout()`方法来设置。
+
+**参考示例；**
+
+```java
+ /**
+     * 以GridView方式显示
+     * @param isVertical 是否水平显示
+     * @param isReverse 是否反向显示
+     */
+    private void showGrid(boolean isVertical,boolean isReverse){
+        /*-----------设置布局管理器也就是RecyclerView样式为GridVIew---------------------------*/
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this,2);
+//        //设置显示方向
+        gridLayoutManager.setOrientation(isVertical ? LinearLayoutManager.VERTICAL : LinearLayoutManager.HORIZONTAL);
+//        //是否反向显示
+        gridLayoutManager.setReverseLayout(isReverse);
+        //设置布局管理器
+        mRecyclerView.setLayoutManager(gridLayoutManager);
+        /*-------------创建适配器-------------------------*/
+        // 实例化适配器
+        ListViewAdapter mListViewAdapter = new ListViewAdapter(beanList);
+        //设置适配器
+        mRecyclerView.setAdapter(mListViewAdapter);
+    }
+```
+
+<img src="images/recycler_grid_demo.gif" alt="recycler_grid_demo" style="zoom:50%;" />
+
 
 
 
