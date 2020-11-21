@@ -44,7 +44,9 @@
 		"github",
 		"custom-favicon",
 		"expandable-chapters",
-		"chapter-fold"
+		"chapter-fold",
+		"-highlight",
+		"sunlight-highlighter"
 	],
 	"pluginsConfig": {
 		"fontsettings": {
