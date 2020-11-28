@@ -22,5 +22,6 @@
     * [文本](chapter_1\ui\controls\text_view.md)
     * [按钮](chapter_1\ui\controls\button.md)
     * [图片按钮](chapter_1\ui\controls\image_button.md)
+    * [RecyclerView](chapter_1\ui\controls\recycler_view.md)
 
 ### 『 结丹 』
