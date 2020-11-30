@@ -44,6 +44,10 @@ implementation 'com.squareup.okhttp3:okhttp:3.14.9"
 implementation 'com.squareup.okio:okio:1.17.5"
 ```
 
+**使用AS工具集成；**
+搜索包名为`com.squareup.okhttp3:okhttp`查找后安装即可。
+
+
 **问题；**
 
 - 编译出现；Static interface methods are only supported starting with Android N (--min-api 24): void butterknife
