@@ -1,38 +1,38 @@
-# 四大组件之Activity（活动）
-
-**介绍；**
-
+# Activity【活动】
+## 介绍
 活动（Activity）是最容易吸引用户的地方，它是一种可以包含用户界面的组件，主要用于和用户进行交互。一个应用程序中可以包含零个或多个活动，但不包含任何活动的应用程序很少见，谁也不想让自己的应用永远无法被用户看到吧？
 
 ## 使用AS手动创建一个活动
 
-### 使用AS的空activity模板创建
-
-#### 创建活动java文件
+### 创建不包含活动的项目；
 
 - 创建一个项目
 
   启动AS，在欢迎界面。选择启动新的AS项目。
 
-  ![1566199434812](images/1566199434812-1600785160710.png)
+  ![1566199434812](activity-images/1566199434812-1600785160710.png)
+
+  
 
 - 不带活动
 
-  ![1566376899383](images/1566376899383.png)
+  ![1566376899383](activity-images/1566376899383.png)
 
 - 配置项目
 
-  ![1566376994556](images/1566376994556.png)
+  ![1566376994556](activity-images/1566376994556.png)
+
+  
 
 - 在`app/src/main/java/top.miku.activitytest`创建一个活动
 
-  1. 依次选择
+  依次选择
 
-  ![1566377890271](images/1566377890271.png)
+  ![1566377890271](activity-images/1566377890271.png)
 
-1. 这里暂时不创建布局文件
+- 这里暂时不创建布局文件
 
-   ![1566378042599](images/1566378042599.png)
+![1566378042599](activity-images/1566378042599.png)
 
 项目中的任何活动都应该重写Activity的`onCreate()`方法，而目前我们的FirstActivity中已经重写了这个方法，这是由Android Studio自动帮我们完成的，代码如下所示：
 
@@ -52,17 +52,21 @@ public class FirstActivity extends AppCompatActivity {
 }
 ```
 
-#### 创建和加载布局xml
+### 创建和加载布局xml
 
 - 在`app/src/main/res`目录创建layout目录
 
-  ![1566378655820](images/1566378655820.png)
+  ![1566378655820](activity-images/1566378655820.png)
+
+  
 
 - 接着在layout目录下创建first_layout.xml
 
-  ![1566378864402](images/1566378864402.png)
+  ![1566378864402](activity-images/1566378864402.png)
 
-![1566378922750](images/1566378922750.png)
+  
+
+![1566378922750](activity-images/1566378922750.png)
 
 - 编辑布局文件，添加一个button
 
@@ -81,7 +85,7 @@ public class FirstActivity extends AppCompatActivity {
   </LinearLayout>
   ```
 
-- 活动`FirstActivity.java`文件中设置布局文件
+- 到`FirstActivity.java`文件中设置布局文件
 
   ```java
   package top.miku.activitytest;
@@ -100,9 +104,9 @@ public class FirstActivity extends AppCompatActivity {
   }
   ```
 
-#### 注册活动
+### 注册活动
 
- 在`AndroidManifest`文件中注册活动。
+在`AndroidManifest`文件中注册活动。
 
 - 打开`app/src/main/AndroidManifest.xml`中注册活动【一般IDE会自动注册】
 
@@ -134,19 +138,19 @@ public class FirstActivity extends AppCompatActivity {
   </manifest>
   ```
 
-### 以类的方式创建活动
+
+
+## 以类的方式创建活动
 
 1. 在包下创建一个class并继承AppCompatActivity
 
-   ![1568437173840](images/1568437173840.png)
-
-   ![1568437302736](images/1568437302736-1600847401228.png)
-
+   ![1568437173840](activity-images/1568437173840.png)![1568437302736](activity-images/1568437302736-1600847401228.png)
+   
 2. 在layout文件下新建布局文件。
 
-   ![1568437408702](images/1568437408702.png)
+   ![1568437408702](activity-images/1568437408702.png)
 
-3. 到class中去重写protected void onCreate(Bundle bundle)方法
+3. 到class中去重写`protected void onCreate(Bundle bundle)`方法
 
    ```java
    package top.miku.uiwidgettest;
@@ -175,11 +179,9 @@ public class FirstActivity extends AppCompatActivity {
 
 
 
-## 启动和关闭活动
+## 启动Activity
 
-## 启动活动
-
-![image-20191119204959631](images/image-20191119204959631.png)
+![image-20191119204959631](activity-images/image-20191119204959631.png)
 
 Activity有两种启动方式，一是作为app的主activity启动。二是被其他activity启动。
 
@@ -247,13 +249,13 @@ public class MainActivity extends AppCompatActivity {
 
 ## Activity之间数据传递
 
+### 使用Bundle传值
 
+> **参考；**
+>
+> Bundle类https://developer.android.google.cn/reference/android/os/Bundle?hl=en
 
-### 使用Bundle在活动之间传递数据
-
-> Bundle类参考https://developer.android.google.cn/reference/android/os/Bundle?hl=en
-
-![image-20191120143224571](images/image-20191120143224571.png)
+![image-20191120143224571](activity-images/image-20191120143224571.png)
 
 **方法**
 
@@ -261,11 +263,15 @@ public class MainActivity extends AppCompatActivity {
 
 #### 把数据传递给下一个Activity
 
+> **注意；**
+>
+> 如果要想当用户按下Back键后也返回数据那么需要重写键盘回调事件。也要返回数据
+
 从活动1传递数据到活动2
 
 **保存数据【活动1】；**
 
-1. `bundle.putString(key,value)`以键值对形式存放要传递的数据。 
+1. `bundle.putString(key,value)`以键值对形式存放要传递的数据。
 2. `intent.putExtras(bundle)`把bundle保存到intent中。
 
 ```java
@@ -358,9 +364,9 @@ public class Main2Activity extends AppCompatActivity {
 
 调用另一个Activity并返回数据给调用者【上一个Activity】
 
-![IntentBundle](images/IntentBundle.gif)
+![IntentBundle](activity-images/IntentBundle.gif)
 
-xml布局
+**xml布局**
 
 - MainActivity.xml布局
 
@@ -416,14 +422,15 @@ xml布局
   </LinearLayout>
   ```
 
-
-
-java代码；
+**java代码；**
 
 - Main.java
+
   - `startActivityForResult();`启动要返回数据的活动，
     - 参数1 要启动的Intent
-    - 参数2 一个请求码一般是以0x开始。
+    - 参数2 一个请求码一般是以0x开始。十六进制
+
+  - `protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)`  重写此方法接收返回的数据
 
 ```java
 package top.miku.testbundle2;
@@ -482,12 +489,11 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-
-
 选择头像.java
 
-- 通过创建Intent对象和Bundle对象，把数据存入bundle中再存入Intent中
-- `setResult();`
+- 通过创建Bundle对象，把数据存入bundle中再存入Intent中
+
+- setResult();  设置返回数据
   - 参数1 返回码一般设置和请求码一致。
   - 参数2 要返回带有数据的Intent对象
 
@@ -598,10 +604,4 @@ public class MainActivity extends AppCompatActivity {
       }
   }
 ```
-
-
-
-
-
-
 
