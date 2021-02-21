@@ -13,11 +13,12 @@
   * 
 * [AndroidStudio妙用]() [x]
 * 控件
-  * [概览](chapter_1/ui/overview.md)
-  * [TextView【文本】](chapter_1/ui/controls/text_view.md)
-  * [Button【按钮】](chapter_1/ui/controls/button.md)
-  * [ImageButton【图片按钮】](chapter_1/ui/controls/image_button.md)
-  * [RecyclerView](chapter_1/ui/controls/recycler_view.md)
+  * [概览](./controls/overview.md)
+  * [TextView【文本】](./controls/text_view.md)
+  * [Button【按钮】](./controls/button.md)
+  * [ImageButton【图片按钮】](./controls/image_button.md)
+  * 
+  * [RecyclerView](./controls/recycler_view.md)
 * 布局
   * [LinearLayout【线性布局】](./layout/linear_layout.md)
   * [RelativeLayout【相对布局】](./layout/relative_layout.md)
