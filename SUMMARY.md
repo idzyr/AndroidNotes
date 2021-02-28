@@ -40,5 +40,10 @@
   * [FrameLayout【帧布局】](./layout/frame_layout.md)
   * [PercentLayout【百分比布局】](./layout/percent_layout.md)
   * [GridLayout【网格布局】](./layout/grid_layout.md)
+* [Intent【意图】](./intent.md)
 * 四大组件
-  * [Activity活动](./component/activity.md)
+  * [Activity【活动】](./component/activity.md)
+  * [Service【服务】](./component/service.md)
+
+* 设计思想
+  * 

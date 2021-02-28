@@ -247,6 +247,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+## Activity之间跳转
+
+
+
+
+
 ## Activity之间数据传递
 
 ### 使用Bundle传值
@@ -272,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
 **保存数据【活动1】；**
 
 1. `bundle.putString(key,value)`以键值对形式存放要传递的数据。
-2. `intent.putExtras(bundle)`把bundle保存到intent中。
+2. `intent.putExtras(bundle)`把bundle保存到intent中。当然putExtras()也可以直接传输数据
 
 ```java
   package top.miku.testbundle;
