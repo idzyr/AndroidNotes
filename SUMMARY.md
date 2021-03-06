@@ -8,10 +8,18 @@
 	* [创建Android项目](./chapter_0/part2/creating_project.md) 
 	* [创建模拟器](/chapter_0/part2/create_emulator.md)
 	* [运行项目](chapter_0/part2/run_project.md) 
+
+* 构建应用
+  * [概览](./build/overview.md)
+
 * 应用资源
   * [概览](chapter_0/part3/providing_resources.md)
   * 
 * [AndroidStudio妙用]() [x]
+* 发布应用
+  * [为应用签名](./release/signature.md)
+  *   
+
 * 控件
   * [概览](./controls/overview.md)
   * [TextView【文本】](./controls/text_view.md)

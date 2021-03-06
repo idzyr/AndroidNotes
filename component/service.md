@@ -281,11 +281,98 @@
 
 4. 编写一个用来测试`BindService`的界面。
 
-   ```java
+   - `boolean bindService(Intent service, ServiceConnection conn,int flags)` 绑定服务
+     - service  意图
+     - conn 是一个接口，通过这个接口接收服务开启或者停止的消息，并且这个参数不能为null
+     - flags 标记如何操作服务 BIND_AUTO_CREATE = 绑定存在就自动创建服务
+
+   - `public void unbindService(ServiceConnection conn) `解绑服务
+     - conn 要解绑服务的，接收服务开启或者停止的消息的接口对象
+
    
+
+   ```java
+   package com.xuelingmiao.servicetest;
+   
+   import androidx.appcompat.app.AppCompatActivity;
+   
+   import android.content.ComponentName;
+   import android.content.Intent;
+   import android.content.ServiceConnection;
+   import android.os.Bundle;
+   import android.os.IBinder;
+   import android.view.View;
+   
+   public class BindServiceActivity extends AppCompatActivity {
+   
+       @Override
+       protected void onCreate(Bundle savedInstanceState) {
+           super.onCreate(savedInstanceState);
+           setContentView(R.layout.activity_bind_service);
+       }
+   
+       /**
+        * 绑定服务
+        *
+        * @param view
+        */
+       public void bindServiceBtn(View view) {
+           Intent intent = new Intent(this, SecondService.class);
+           /**
+            * bindService()
+            *  参数；
+            *      参数一；intent意图
+            *      参数二；是一个接口，通过这个接口接收服务开启或者停止的消息，并且这个参数不能为null
+            *      参数三；标记如何操作服务 BIND_AUTO_CREATE = 绑定存在就自动创建服务
+            *
+            */
+           bindService(intent,mServiceConnection,BIND_AUTO_CREATE);
+   
+       }
+   
+       /**
+        * 服务连接
+        */
+       private ServiceConnection mServiceConnection = new ServiceConnection() {
+           @Override
+           public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+   
+           }
+   
+           @Override
+           public void onServiceDisconnected(ComponentName componentName) {
+   
+           }
+       };
+   
+   
+       /**
+        * 解绑服务
+        *
+        * @param view
+        */
+       public void unBindServiceBtn(View view) {
+           if (mServiceConnection != null) {
+               unbindService(mServiceConnection);
+           }
+       }
+   }
    ```
 
-   
+
+![image-20210304224716935](service-images/image-20210304224716935.png)
+
+> **注意；**
+>
+> 只可以解绑一次，多次解绑会抛异常
 
 ## 生命周期
+
+
+
+
+
+
+
+## 通讯
 
