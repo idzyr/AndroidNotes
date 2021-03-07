@@ -24,6 +24,8 @@ Java 密钥库（.jks 或 .keystore）：一个二进制文件，用作证书和
 
 ## 生成密钥库
 
+### AS生成
+
 1. 在菜单栏中，依次点击 **Build > Generate Signed Bundle/APK**。
 
 2. 在 **Generate Signed Bundle or APK** 对话框中，选择 **Android App Bundle** 或 **APK**，然后点击 **Next**。
@@ -117,7 +119,8 @@ Java 密钥库（.jks 或 .keystore）：一个二进制文件，用作证书和
    -v                                    详细输出
   ```
 
-  
+
+#### 迁移密钥到PKCS12
 
 **演示；**
 
@@ -128,7 +131,7 @@ Java 密钥库（.jks 或 .keystore）：一个二进制文件，用作证书和
    keytool -genkey -alias 密钥别名 -keypass 密钥密码 -keyalg 密钥算法名称 -keysize 密钥位大小 -validity 有效天数 -keystore 密钥库名称（包含路径.keystore） -storepass 密钥库密码
    
    # 示例
-   keytool -genkey -alias demo -keypass 123123 -keyalg RSA -keysize 1024 -validity 366 -keystore ./deom.keystore -storepass 321321
+   keytool -genkey -alias demo -keypass 123123 -keyalg RSA -keysize 2048 -validity 366 -keystore ./deom.keystore -storepass 321321
    ```
 
    ![image-20210306211441320](signature-images/image-20210306211441320.png)
@@ -148,8 +151,25 @@ Java 密钥库（.jks 或 .keystore）：一个二进制文件，用作证书和
    ![image-20210306222259890](signature-images/image-20210306222259890.png)
 
    ![image-20210306222358158](signature-images/image-20210306222358158.png)可以看到之前密钥库已经被天机`.old`作为备份，要使用就用没有`old`的密钥库文件。
+   
+   > **注意；**
+   >
+   > 如果是使用AS密钥生成工具进行生成的密钥库文件请将后缀名修改为`.keystore` 执行上述命令。
 
+#### 直接生成PKCS12
 
+1. 执行下面命令
+
+   ```bash
+   # 格式
+   keytool -genkey -v -alias 密钥别名 -keyalg 密钥算法名称 -storetype 密钥库类型 -keystore 密钥库名称 -storepass 密钥库密码 -keypass 密钥密码 -validity 密钥库有效期
+   # 示例
+   keytool -genkey -v -alias demo -keyalg RSA -storetype PKCS12 -keystore ./demo.keystore -storepass 123123 -keypass 321321 -validity 3600
+   ```
+
+   ![image-20210307152259386](signature-images/image-20210307152259386.png)
+
+2. 
 
 ## 使用密钥为应用签名
 
