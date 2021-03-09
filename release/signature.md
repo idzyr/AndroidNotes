@@ -151,7 +151,7 @@ keytool -genkey -alias demo -keypass 123123 -keyalg RSA -keysize 2048 -validity 
 
 ![image-20210308210346952](signature-images/image-20210308210346952.png)
 
-
+图片内容补充请；在指定了 -destkeystore后重试
 
 ```bash
 # 格式；
@@ -167,7 +167,7 @@ keytool -importkeystore -srckeystore ./deom.keystore -destkeystore ./deom.keysto
 
 ![image-20210306222358158](signature-images/image-20210306222358158.png)
 
-可以看到之前密钥库已经被天机`.old`作为备份，要使用就用没有`old`后缀的密钥库文件。
+可以看到之前密钥库已经被添加`.old`作为备份，要使用就用没有`old`后缀的密钥库文件。
 
 > **注意；**
 >
