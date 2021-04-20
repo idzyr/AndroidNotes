@@ -6,20 +6,22 @@
 	* [安装AndroidStudio](./chapter_0/part1/install_ide.md) 
 * 构建首个应用
 	* [创建Android项目](./chapter_0/part2/creating_project.md) 
-	* [创建模拟器](/chapter_0/part2/create_emulator.md)
+	* [创建模拟器](./chapter_0/part2/create_emulator.md)
 	* [运行项目](chapter_0/part2/run_project.md) 
-
-* 构建应用
-  * [概览](./build/overview.md)
-
+* Gradle【构建项目】
+  * [概览](./gradles/overview.md)
 * 应用资源
-  * [概览](chapter_0/part3/providing_resources.md)
-  * 
-* [AndroidStudio妙用]() [x]
+  * [概览](./chapter_0/part3/providing_resources.md)
+  * [应用清单文件](./chapter_0/part3/app_manifest.md)
+* AndroidStudio使用
+  * 菜单
+    * [构建](./android-studio/menus/build.md)
+  * 工具
+    * [Logcat日志](./android-studio/tools/logcat.md)
+
 * 发布应用
   * [为应用签名](./release/signature.md)
   *   
-
 * 控件
   * [概览](./controls/overview.md)
   * [TextView【文本】](./controls/text_view.md)
@@ -48,10 +50,16 @@
   * [FrameLayout【帧布局】](./layout/frame_layout.md)
   * [PercentLayout【百分比布局】](./layout/percent_layout.md)
   * [GridLayout【网格布局】](./layout/grid_layout.md)
-* [Intent【意图】](./intent.md)
+* [Intent【意图】](./intent/intent.md)
+* 
+* 其它组件
+  * [Toast【气泡消息】](./component-other/toast.md)
+  * [Menu【菜单】](./component-other/menu.md)
 * 四大组件
   * [Activity【活动】](./component/activity.md)
   * [Service【服务】](./component/service.md)
 
+* Android中的HTTP
+  * [OKHttp](./http/okhttp.md)
 * 设计思想
   * 

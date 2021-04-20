@@ -16,4 +16,4 @@
 
 > **注意**：
 >
-> **Run** 按钮 ![img](overview-images/toolbar-run.png) 可以在设置了 `testOnly="true"` 的情况下构建 APK，这意味着，只能通过 Android Studio 使用的 `adb` 安装 APK。如需获得无需 adb 即可安装的可调试 APK，请选择您的调试变体，然后依次点击 **Build Bundle(s)/APK(s) > Build APK(s)**。
+> **Run** 按钮 ![img](build-images/toolbar-run.png) 可以在设置了 `testOnly="true"` 的情况下构建 APK，这意味着，只能通过 Android Studio 使用的 `adb` 安装 APK。如需获得无需 adb 即可安装的可调试 APK，请选择您的调试变体，然后依次点击 **Build Bundle(s)/APK(s) > Build APK(s)**。
