@@ -61,5 +61,8 @@
 
 * Android中的HTTP
   * [OKHttp](./http/okhttp.md)
+
+* 隐私
+  * [申请权限](./privacys/authority.md)
 * 设计思想
   * 
