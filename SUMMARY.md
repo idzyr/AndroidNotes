@@ -61,8 +61,12 @@
 
 * Android中的HTTP
   * [OKHttp](./http/okhttp.md)
-
 * 隐私
   * [申请权限](./privacys/authority.md)
+* 多线程
+  * [子线程更新UI](./multithreading/update-ui.md)
+* [字体图标](./others/font-icon.md)
+* JSON&XML
+  * 
 * 设计思想
   * 
