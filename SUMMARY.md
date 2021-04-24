@@ -71,7 +71,8 @@
   * [多线程和异步任务](./multithreading/asynchronous-task.md)
   * [子线程更新UI](./multithreading/update-ui.md)
 * JSON&XML
-  * [xml](./xml&json/xml-data.md)
+  * [XML](./xml&json/xml-data.md)
+  * [JSON](./xml&json/json-data.md)
 * 拓展
   * [字体图标](./expands/font-icon.md)
   * [Bugly异常上报等](./expands/bugly.md)
