@@ -60,6 +60,8 @@
 * 四大组件
   * [Activity【活动】](./component/activity.md)
   * [Service【服务】](./component/service.md)
+* 数据持久化存储
+  * [File方式存储](./persistent-storage/file-storage.md)
 
 * Android中的HTTP
   * [OKHttp](./http/okhttp.md)
@@ -72,6 +74,8 @@
   * [xml](./xml&json/xml-data.md)
 * 拓展
   * [字体图标](./expands/font-icon.md)
-  * [Bugly异常上报等]
+  * [Bugly异常上报等](./expands/bugly.md)
+* 实用
+  * [相关信息获取](./utils/getting-information.md)
 * 设计思想
   * 
