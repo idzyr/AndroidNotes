@@ -1,4 +1,4 @@
-# TooBar使用
+# ToolBar【工具栏】
 
 Action Bar是Android 3.0引入的导航栏功能，然而到5.0的时候，又推出了ToolBar，实际上这两个可以理解为同一个东西，ToolBar是对ActionBar的升级，使用起来也基本是一样的。只是因为ActionBar在实际使用过程中的各种问题，才推出了ToolBar来接替ActionBar。ActionBar通常翻译为操作栏，而到了ToolBar则翻译为工具栏，这里我们统称为工具栏。
 
@@ -74,13 +74,15 @@ Action Bar是Android 3.0引入的导航栏功能，然而到5.0的时候，又�
        }
    ```
 
-<img src="images/image-20201104220410470.png" alt="image-20201104220410470" style="zoom: 50%;" />
+
+
+<img src="tool-bar-images/image-20201104220410470.png" alt="image-20201104220410470" style="zoom:50%;" />
 
 ## 管理工具栏
 
 一个完整的工具栏主要组成部分如下：
 
-![image-20201105193119929](images/image-20201105193119929.png)
+![image-20201105193119929](tool-bar-images/image-20201105193119929.png)
 
 ### 各个部分设置方法
 

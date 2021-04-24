@@ -18,7 +18,7 @@
     * [构建](./android-studio/menus/build.md)
   * 工具
     * [Logcat日志](./android-studio/tools/logcat.md)
-  * [快捷键]()
+  * [快捷键](./android-studio/hot-key.md)
   * 
 * 发布应用
   * [为应用签名](./release/signature.md)
@@ -56,6 +56,7 @@
 * 其它组件
   * [Toast【气泡消息】](./component-other/toast.md)
   * [Menu【菜单】](./component-other/menu.md)
+  * [ToolBar【工具栏】](./component-other/tool-bar.md)
 * 四大组件
   * [Activity【活动】](./component/activity.md)
   * [Service【服务】](./component/service.md)
