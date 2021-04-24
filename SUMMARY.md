@@ -18,7 +18,8 @@
     * [构建](./android-studio/menus/build.md)
   * 工具
     * [Logcat日志](./android-studio/tools/logcat.md)
-
+  * [快捷键]()
+  * 
 * 发布应用
   * [为应用签名](./release/signature.md)
   *   
@@ -64,9 +65,12 @@
 * 隐私
   * [申请权限](./privacys/authority.md)
 * 多线程
+  * [多线程和异步任务](./multithreading/asynchronous-task.md)
   * [子线程更新UI](./multithreading/update-ui.md)
-* [字体图标](./others/font-icon.md)
 * JSON&XML
   * [xml](./xml&json/xml-data.md)
+* 拓展
+  * [字体图标](./expands/font-icon.md)
+  * [Bugly异常上报等]
 * 设计思想
   * 
