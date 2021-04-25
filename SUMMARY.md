@@ -58,7 +58,7 @@
   * [Menu【菜单】](./component-other/menu.md)
   * [ToolBar【工具栏】](./component-other/tool-bar.md)
 * 四大组件
-  * [Activity【活动】](./component/activity.md)
+  * [Activity【活动】](./component/activity.md)<sup>修</sup>
   * [Service【服务】](./component/service.md)
 * 数据持久化存储
   * [File方式存储](./persistent-storage/file-storage.md)

@@ -611,3 +611,792 @@ public class MainActivity extends AppCompatActivity {
   }
 ```
 
+
+
+### 不使用Bundle传值
+
+#### 向下一个活动传递数据
+
+在启动活动时传递数据的思路很简单，Intent中提供了一系列`putExtra()` 方法的重载，可以把我们想要传递的数据暂存在Intent中，启动了另一个活动后，只需要把这些数据再从Intent中取出就可以了。
+
+- `putExtra()`传递数据
+
+  ```java
+   /*—————————————————向下一个活动传递数据——————————————————*/
+          Button button8 = (Button) findViewById(R.id.button_8);
+          button8.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  //定义一个string类型的变量
+                  String data = "Hello SecondActivity";
+                  //使用显式启动一个活动
+                  Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
+                  //调用putExtra()方法给下一个活动传递数据
+                  // 参数：是一个键值对
+                  intent.putExtra("extra_data",data);
+                  startActivity(intent);
+              }
+          });
+  ```
+
+- 到下一个活动接收数据
+
+  ```java
+  package top.miku.activitytest;
+  
+  import androidx.appcompat.app.AppCompatActivity;
+  
+  import android.content.Intent;
+  import android.os.Bundle;
+  import android.util.Log;
+  
+  public class SecondActivity extends AppCompatActivity {
+      //定义一个本类的类名常量，方便下面使用
+      private static final String TAG = "SecondActivity";
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          setContentView(R.layout.second_layout);
+          //获取上一个活动的Intent对象
+          Intent intent = getIntent();
+          //通过对象获取其传递的数据getStringExtra()通过key获取value
+          /*
+          getStringExtra() 获取字符串类型值
+          getIntExtra() 获取int类型值
+          getBooleanExtra()获取布尔类型值
+          ……以此类推。
+          *
+          * */
+          String data = intent.getStringExtra("extra_data");
+          //答应传递的数据
+          Log.d(TAG, "onCreatEextra_data:"+data);
+      }
+  }
+  ```
+
+**结果；**
+
+![1566646981777](activity-images/1566646981777.png)
+
+#### 返回数据给上一个活动
+
+- 使用`startActivityForResult()`方法
+
+  ```java
+  /*——————————向上一个活动传递数据————————————————————————*/
+          Button button9 = (Button) findViewById(R.id.button_9);
+          button9.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
+                  //startActivityForResult()方法启动的活动，当被销毁时可以返回给当前活动数据
+                  //参数；
+                  // 一个intent意图对象，请假码，回调中用来判断数据来源。
+                  startActivityForResult(intent,1);
+              }
+          });
+  ```
+
+- 到SecondActivity活动中返回数据给FirstActivity活动
+
+  ```java
+   /*——————————返回数据给上一个活动————————————————————*/
+          Button button2 = (Button) findViewById(R.id.button_2);
+          button2.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  Intent intent1 = new Intent();
+                  intent1.putExtra("data_return","Hello FirstActivity");
+                  setResult(RESULT_OK,intent1);
+                  finish();
+              }
+          });
+  ```
+
+- 到FirstActivity活动中重写`onActivityResult()`方法来接收数据
+
+  ```java
+   /*———————————————接收上一个活动返回的数据———————————————————————————*/
+      /*
+      * onActivityResult() 方法带有三个参数，
+      * - 第一个参数requestCode ，即我们在启动活动时传入的请求码。
+      * - 第二个参数resultCode ，即我们在返回数据时传入的处理结果。
+      * - 第三个参数data ，即携带着返回数据的Intent。
+      * */
+      @Override
+      protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+          switch (requestCode) {
+              // 请求代码是1
+              case 1:
+                  //结果 == RESULT_OK【-1】
+                  if (resultCode ==  RESULT_OK){
+                      //使用data接收到的Intent对象获取其值。
+                      //getStringExtra根据key获取value
+                      String returnData = data.getStringExtra("data_return");
+                      //打印这个值。
+                      Log.d("FirstActivity", returnData);
+                  };
+                  break;
+              default:
+          }
+      }
+  /*
+  由于在一个活动中有可能调用startActivityForResult() 方法去启动很多不同的活动，每一个活动返回的数据都会回调到onActivityResult() 这个方法中，因此我们首先要做的就是通过检查requestCode 的值来判断数据来源。确定数据是从SecondActivity返回的之后，我们再通过resultCode 的值来判断处理结果是否成功。最后从data 中取值并打印出来，这样就完成了向上一个活动返回数据的工作。
+  
+  */
+  ```
+
+**结果；**
+
+![1566651252797](file:///C:/Users/zyrbx/Desktop/Android/AS/%E5%9F%BA%E4%BA%8EAndroidStudio%E5%BC%80%E5%8F%91App-images/1566651252797.png)
+
+
+
+#### 问题
+
+- 解决用户不是通过点击按钮来结束活动无法接收返回数据问题到SecondActivity中重写`onBackPressed()`
+
+  ```java
+     /*解决用户不是通过点击按钮来结束活动无法接收返回数据问题*/
+      @Override
+      public void onBackPressed() {
+          Intent intent1 = new Intent();
+          //调用putExtra()方法把数据存储到Intent里
+          //参数；
+          //key和value
+          intent1.putExtra("data_return","Hello FirstActivity");
+          //setResult()
+          // - 第一个参数用于向上一个活动返回处理结果，一般只使用RESULT_OK 或RESULT_CANCELED 这两个值，
+          // - 第二个参数则把带有数据的Intent传递回去，
+          setResult(RESULT_OK,intent1);
+          //调用了finish() 方法来销毁当前活动。
+          finish();
+      }
+  ```
+
+
+
+## 活动生明周期
+
+### 返回栈
+
+Android中的活动是可以层叠的。我们每启动一个新的活动，就会覆盖在原活动之上，然后点击Back键会销毁最上面的活动，下面的一个活动就会重新显示出来。
+
+其实Android是使用任务（Task）来管理活动的，一个任务就是一组存放在栈里的活动的集合，这个栈也被称作返回栈（Back Stack）。栈是一种后进先出的数据结构，在默认情况下，每当我们启动了一个新的活动，它会在返回栈中入栈，并处于栈顶的位置。而每当我们按下Back键或调用`finish()` 方法去销毁一个活动时，处于栈顶的活动会出栈，这时前一个入栈的活动就会重新处于栈顶的位置。系统总是会显示处于栈顶的活动给用户。
+
+![00059](activity-images/00059.jpeg)
+
+
+
+### 活动状态
+
+每个活动在其生命周期中最多可能会有4种状态。
+
+1. **运行状态**
+
+   当一个活动位于返回栈的栈顶时，这时活动就处于运行状态。系统最不愿意回收的就是处于运行状态的活动，因为这会带来非常差的用户体验。
+
+2. **暂停状态**
+
+   当一个活动不再处于栈顶位置，但仍然可见时，这时活动就进入了暂停状态。你可能会觉得既然活动已经不在栈顶了，还怎么会可见呢？这是因为并不是每一个活动都会占满整个屏幕的，比如对话框形式的活动只会占用屏幕中间的部分区域，你很快就会在后面看到这种活动。处于暂停状态的活动仍然是完全存活着的，系统也不愿意去回收这种活动（因为它还是可见的，回收可见的东西都会在用户体验方面有不好的影响），只有在内存极低的情况下，系统才会去考虑回收这种活动。
+
+3.　　**停止状态**
+
+当一个活动不再处于栈顶位置，并且完全不可见的时候，就进入了停止状态。系统仍然会为这种活动保存相应的状态和成员变量，但是这并不是完全可靠的，当其他地方需要内存时，处于停止状态的活动有可能会被系统回收。
+
+4.　　**销毁状态**
+
+当一个活动从返回栈中移除后就变成了销毁状态。系统会最倾向于回收处于这种状态的活动，从而保证手机的内存充足。
+
+### 活动的生存期
+
+Activity类中定义了7个回调方法，覆盖了活动生命周期的每一个环节
+
+- `onCreate()`这个方法你已经看到过很多次了，每个活动中我们都重写了这个方法，它会在活动第一次被创建的时候调用。你应该在这个方法中**完成活动的初始化操作**，比如说加载布局、绑定事件等。
+- `onStart()`这个方法在活动**由不可见变为可见**的时候调用。
+- `onResume()`这个方法在活动准备好**和用户进行交互**的时候调用。此时的活动一定位于返回栈的栈顶，并且处于**运行状态**。
+- `onPause()`这个方法在**系统准备去启动或者恢复**另一个活动的时候调用。我们通常会在这个方法中将一些消耗CPU的资源释放掉，以及保存一些关键数据，但这个方法的执行速度一定要快，不然会影响到新的栈顶活动的使用。
+- `onStop()`这个方法在活动**完全不可见**的时候调用。它和`onPause()`方法的主要区别在于，如果启动的新活动是一个对话框式的活动，那么`onPause()`方法会得到执行，而`onStop()`方法并不会执行。
+- `onDestroy()`这个方法在活动被**销毁之前**调用，之后活动的状态将变为销毁状态。
+- `onRestart()`这个方法在活动由**停止状态变为运行状态**之前调用，也就是活动被重新启动了。
+
+#### 完整生存期
+
+活动在`onCreate()`方法和`onDestroy()`方法之间所经历的，就是完整生存期。一般情况下，一个活动会在`onCreate()`方法中完成各种初始化操作，而在`onDestroy()`方法中完成释放内存的操作。
+
+ onCreate()【初始状态】 => onDestroy()【销毁状态】
+
+#### 可见生存期
+
+活动在`onStart()`方法和`onStop()`方法之间所经历的，就是可见生存期。在可见生存期内，活动对于用户总是可见的，即便有可能无法和用户进行交互。我们可以通过这两个方法，合理地管理那些对用户可见的资源。比如在`onStart()`方法中对资源进行加载，而在`onStop()`方法中对资源进行释放，从而保证处于停止状态的活动不会占用过多内存。
+
+ onStart()【可见状态】 => onStop()【停止完全不可见】
+
+#### 前台生存期
+
+活动在`onResume()`方法和`onPause()`方法之间所经历的就是前台生存期。在前台生存期内，活动总是处于运行状态的，此时的活动是可以和用户进行交互的，我们平时看到和接触最多的也就是这个状态下的活动。
+
+ onResume()【运行状态】 => onPause()【暂停状态】
+
+![00060](activity-images/00060.jpeg)
+
+
+
+
+
+#### 体验活动的生命周期
+
+> 主要是MainActivity活动
+
+- 创建一个新的项目命名为ActivityLifeCycleTest【活动生命周期测试】
+
+- 然后创建两个子活动分别命名为NormalActivity【正常活动】和DialogActivity【对话活动】
+
+- 替换normal_layout.xml布局为以下
+
+  ```xml
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+  
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="This is a normal activity"
+          />
+  
+  </LinearLayout>
+  ```
+
+- 在替换dialog_layout.xml里面的代码
+
+  ```xml
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+  
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="This is a dialog activity"
+          />
+  
+  </LinearLayout>
+  ```
+
+- 修改AndroidManifest.xml中DialogActivity的属性
+
+  ```xml
+  <activity
+                  android:name=".DialogActivity"
+                    //为当前活动指定一个主题
+                  android:theme="@style/Theme.AppCompat.Dialog">
+  
+          </activity>
+  ```
+
+- 替换activity_main.xml布局为以下代码
+
+  ```xml
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+  
+      <Button
+          android:id="@+id/start_normal_activity"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Start NormalActivity" />
+  
+      <Button
+          android:id="@+id/start_dialog_activity"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Start DialogActivity" />
+  </LinearLayout>
+  ```
+
+- 修改MainActivity.java中的代码
+
+  ```java
+  package top.miku.activitylifecycletest;
+  
+  import androidx.appcompat.app.AppCompatActivity;
+  
+  import android.content.Intent;
+  import android.os.Bundle;
+  import android.util.Log;
+  import android.view.View;
+  import android.widget.Button;
+  
+  public class MainActivity extends AppCompatActivity {
+      //定义一个itag常量存放类名
+      private static final String TAG = "MainActivity";
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          //初始状态标记
+          Log.d(TAG, "onCreate: 初始");
+          setContentView(R.layout.activity_main);
+          //获取startNormalActivity按钮
+          Button startNormalActivity = (Button) findViewById(R.id.start_normal_activity);
+          //获取startDialogActivity按钮
+          Button startDialogActivity = (Button) findViewById(R.id.start_dialog_activity);
+          //为startNormalActivity注册事件
+          startNormalActivity.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  //创建一个intent对象,显式启动
+                  Intent intent = new Intent(MainActivity.this,NormalActivity.class);
+                  //启动这个活动
+                  startActivity(intent);
+              }
+          });
+          //startDialogActivity注册事件
+          startDialogActivity.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  //创建一个intent对象,显式启动
+                  Intent intent = new Intent(MainActivity.this,DialogActivity.class);
+                  //启动这个活动
+                  startActivity(intent);
+              }
+          });
+      }
+      /*—————————————————重写活动生存期回调—————————————————————————————————*/
+      //重写启动方法【可以见状态】
+      //当活动启动后可以和用户交互时调用
+      @Override
+      protected void onStart() {
+          super.onStart();
+          Log.d(TAG, "onStart: 启动【可以见状态】");
+      }
+      //运行状态
+      @Override
+      protected void onResume() {
+          super.onResume();
+          Log.d(TAG, "onResume: 恢复运行状态");
+      }
+      //暂停状态
+      @Override
+      protected void onPause() {
+          super.onPause();
+          Log.d(TAG, "onPause: 暂停状态【可见】");
+      }
+      //停止状态
+      @Override
+      protected void onStop() {
+          super.onStop();
+          Log.d(TAG, "onStop: 停止状态【完全不可及】");
+      }
+      //销毁
+      @Override
+      protected void onDestroy() {
+          super.onDestroy();
+          Log.d(TAG, "onDestroy: 销毁状态");
+      }
+      //重启状态
+      @Override
+      protected void onRestart() {
+          super.onRestart();
+          Log.d(TAG, "onRestart: 活动重启");
+      }
+  }
+  ```
+
+  1. 当MainActivity第一次被创建时会依次执行`onCreate()`、`onStart()`和`onResume()`方法.
+
+     ![1566718451971](activity-images/1566718451971.png)
+
+  2. 点击第一个按钮，启动NormalActivity
+
+     ![1566718689191](activity-images/1566718689191.png)
+
+  3. 返回MainAc由于之前MainActivity已经进入了停止状态，所以`onRestart()`方法会得到执行，之后又会依次执行`onStart()`和`onResume()`方法。**注意**此时`onCreate()`方法不会执行，因为MainActivity并没有重新创建。
+
+     ![1566719135562](activity-images/1566719135562.png)
+
+1. 再点击第二个按钮，启动DialogActivity可以看到，只有`onPause()`方法得到了执行，`onStop()`方法并没有执行，这是因为DialogActivity并没有完全遮挡住MainActivity，此时MainActivity只是进入了暂停状态，并没有进入停止状态。
+
+<img src="activity-images/device-2019-08-25-154923.png" alt="device-2019-08-25-154923" style="zoom: 33%;" />
+
+![1566719461902](activity-images/1566719461902.png)
+
+1. 再次返回MainActivity的打印日志
+
+   ![1566719858889](activity-images/1566719858889.png)
+
+2. 最后在MainActivity按下Back键退出程序，打印信息，依次会执行`onPause()`、`onStop()`和`onDestroy()`方法，最终销毁MainActivity。这就是一个完整的生命周期。
+
+   ![1566719935148](activity-images/1566719935148.png)
+
+#### 活动被回收了怎么办
+
+当一个活动进入到了停止状态，是有可能被系统回收的。那么想象以下场景：应用中有一个活动A，用户在活动A的基础上启动了活动B，活动A就进入了停止状态，这个时候由于系统内存不足，将活动A回收掉了，然后用户按下Back键返回活动A，会出现什么情况呢？其实还是会正常显示活动A的，只不过这时并不会执行`onRestart()` 方法，而是会执行活动A的`onCreate()`方法，因为活动A在这种情况下会被重新创建一次。这样看上去好像一切正常，可是别忽略了一个重要问题，活动A中是可能存在临时数据和状态的。打个比方，MainActivity中有一个文本输入框，现在你输入了一段文字，然后启动NormalActivity，这时MainActivity由于系统内存不足被回收掉，过了一会你又点击了Back键回到MainActivity，你会发现刚刚输入的文字全部都没了，因为MainActivity被重新创建了。
+
+解决Activity中还提供了一个`onSaveInstanceState()`回调方法，这个方法可以保证在活动被回收之前**一定会被调用**，因此我们可以通过这个方法来解决活动被回收时临时数据得不到保存的问题。
+
+- `onSaveInstanceState()`方法会携带一个`Bundle`类型的参数，`Bundle`提供了一系列的方法用于保存数据，比如可以使用`putString()`方法保存字符串，使用`putInt()`方法保存整型数据，以此类推。每个保存方法需要传入**两个参数**，第一个参数是键，用于后面从`Bundle`中取值，第二个参数是真正要保存的内容。
+
+- 到MainActivity.java中重写`onSaveInstanceState()`方法来保存临时数据
+
+  ```java
+  /*———————————当活动被销毁后回调执行，用来保存临时数据—————————————*/
+  
+      @Override
+      public void onSaveInstanceState(@NonNull Bundle outState) {
+          super.onSaveInstanceState(outState);
+          String tempData = "用户输入的内容";
+          //保存数据到Bundle,参数key和value
+          outState.putString("data_key",tempData);
+  
+      }
+  ```
+
+- 获取数据我们一直使用的`onCreate()`方法其实也有一个`Bundle`类型的参数。这个参数在一般情况下都是`null`但是如果在活动被系统回收之前有通过`onSaveInstanceState()`方法来保存数据的话，这个参数就会带有之前所保存的全部数据，我们只需要再通过相应的取值方法将数据取出即可。使用`savedInstanceState.getString("key")`到onCreate()闭包中编写获取数据。
+
+  ```java
+  //获取活动被销毁保存的临时数据
+          if (savedInstanceState != null){
+              //接收保存的数据
+              String tempData = savedInstanceState.getString("temp_data");
+              //打印数据
+              Log.d(TAG,""+tempData);
+              //书写恢复数据的代码即可
+              //……
+          }
+  ```
+
+### 活动的启动模式
+
+启动模式一共有4种，分别是standard、singleTop、singleTask和singleInstance，可以在AndroidManifest.xml中通过给`<activity>`标签指定`android:launchMode`属性来选择启动模式。
+
+#### standard【活动默认启动模式】
+
+standard模式。每次启动活动重新创建一个活动实例，无论被创建的活动是否在栈顶都会重新创建一个实例。
+
+![00071](activity-images/00071.jpeg)
+
+- 修改FirstActivity.java中onCreate()方法代码
+
+  ```java
+  @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          //打印对象的toString
+          Log.d("FirstActivity",this.toString());
+          setContentView(R.layout.first_layout);
+          Button button1 = (Button) findViewById(R.id.Button_1);
+          button1.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  //调用自身
+                   Intent intent = new Intent(FirstActivity.this,FirstActivity.class);
+                   startActivity(intent);
+              }
+          });
+      }
+  ```
+
+- 点击按钮连续点击按钮触发事件打印日志如下
+
+  ![1566974187721](activity-images/1566974187721.png)
+
+- 从打印信息中我们就可以看出，每点击一次按钮就会创建出一个新的FirstActivity实例。此时返回栈中也会存在3个FirstActivity的实例，因此你需要连按3次Back键才能退出程序。
+
+#### singleTop
+
+当活动的启动模式指定为singleTop，在启动活动时如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例。
+
+![00074](activity-images/00074.jpeg)
+
+- 修改AndroidManifest.xml中FirstActivity的启动模式
+
+  ```xml
+  <activity
+                  android:name=".FirstActivity"
+                  android:launchMode="singleTop"//指定启动模式
+                  android:label="This is FirstActivity">
+              <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
+  
+                  <category android:name="android.intent.category.LAUNCHER" />
+              </intent-filter>
+          </activity>
+  ```
+
+- 日志分析
+
+  ![1566975364698](activity-images/1566975364698.png)
+
+  
+
+  查看logcat会看到已经创建了一个FirstActivity的实例。但是之后不管你点击多少次按钮都不会再有新的打印信息出现，因为目前FirstActivity已经处于返回栈的栈顶，每当想要再启动一个FirstActivity时都会直接使用栈顶的活动，因此FirstActivity也只会有一个实例，仅按一次Back键就可以退出程序。
+
+- 不过当FirstActivity并未处于栈顶位置时，这时再启动FirstActivity，还是会创建新的实例的。代码实测
+
+  1. 修改FirstActivity中`onCreate()`方法的代码。
+
+     ```java
+     Button button2 = (Button) findViewById(R.id.Button_2);
+             button2.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View view) {
+                     //启动第二个活动
+                     Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
+                     startActivity(intent);
+                 }
+             });
+     ```
+
+  2. 修改SecondActivity中`onCreate()`代码
+
+     ```java
+      @Override
+         protected void onCreate(Bundle savedInstanceState) {
+             super.onCreate(savedInstanceState);
+             Log.d("SecondActivity", this.toString());
+             setContentView(R.layout.second_layout);
+             Button button1 = (Button) findViewById(R.id.Button_1);
+             button1.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View view) {
+                     Intent intent = new Intent(SecondActivity.this,FirstActivity.class);
+                     startActivity(intent);
+                 }
+             });
+     ```
+
+  3. 分析日志在FirstActivity界面点击按钮进入到SecondActivity，然后在SecondActivity界面点击按钮，又会重新进入到FirstActivity。
+
+     ![1566977428422](activity-images/1566977428422.png)
+
+     可以看到系统创建了两个不同的FirstActivity实例，这是由于在SecondActivity中再次启动FirstActivity时，栈顶活动已经变成了SecondActivity，因此会创建一个新的FirstActivity实例。现在按下Back键会返回到SecondActivity，再次按下Back键又会回到FirstActivity，再按一次Back键才会退出程序。
+
+#### singleTask
+
+使用singleTop模式可以很好地解决重复创建栈顶活动的问题，但是正如你在上一节所看到的，如果该活动并没有处于栈顶的位置，还是可能会创建多个活动实例的。那么有没有什么办法可以让某个活动在整个应用程序的上下文中只存在一个实例呢？这就要借助singleTask模式来实现了。当活动的启动模式指定为singleTask，每次启动该活动时系统首先会在返回栈中检查是否存在该活动的实例，如果发现已经存在则直接使用该实例，并把在这个活动之上的所有活动统统出栈，如果没有发现就会创建一个新的活动实例。
+
+![00076](activity-images/00076.jpeg)
+
+- 修改AndroidManifest.xml中FirstActivity的启动模式
+
+  ```xml
+   <activity
+                  android:name=".FirstActivity"
+                  android:label="This is FirstActivity"
+                  android:launchMode="singleTask">//修改启动模式
+              <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
+  
+                  <category android:name="android.intent.category.LAUNCHER" />
+              </intent-filter>
+          </activity>
+  ```
+
+- 在FirstActivity中添加`onRestart()`方法，并打印日志
+
+  ```java
+  @Override
+      protected void onRestart() {
+          super.onRestart();
+          Log.d("FirstActivity", "onRestart: 重启状态");
+      }
+  ```
+
+- 在SecondActivity中添加`onDestroy()`方法，并打印日志：
+
+  ```java
+   @Override
+      protected void onDestroy() {
+          super.onDestroy();
+          Log.d("SecondActivity", "onDestroy: 销毁活动");
+  
+      }
+  ```
+
+- 在FirstActivity界面点击按钮进入到SecondActivity，然后在SecondActivity界面点击按钮，又会重新进入到FirstActivity。
+
+  ![1566978928920](activity-images/1566978928920.png)
+
+  从打印信息中就可以明显看出了，在SecondActivity中启动FirstActivity时，会发现返回栈中已经存在一个FirstActivity的实例，并且是在SecondActivity的下面，于是SecondActivity会从返回栈中出栈，而FirstActivity重新成为了栈顶活动，因此FirstActivity的`onRestart()`方法和SecondActivity的`onDestroy()`方法会得到执行。现在返回栈中应该只剩下一个FirstActivity的实例了，按一下Back键就可以退出程序。
+
+#### singleInstance
+
+在这种模式下会有一个**单独**的返回栈来管理这个活动，不管是哪个应用程序来访问这个活动，都共用的同一个返回栈，就解决了共享活动实例的问题。
+
+![00078](activity-images/00078.jpeg)
+
+- 修改AndroidManifest.xml中SecondActivity的启动模式
+
+  ```xml
+  <activity
+                  android:name=".SecondActivity"
+                  android:label="第二个活动"
+                    //修改启动模式
+                  android:launchMode="singleInstance"></activity>
+          <activity
+  ```
+
+- 修改FirstActivity中`onCreate()`方法的代码
+
+  ```java
+  Log.d("FirstActivity", "Task id is: "+getTaskId()); //getTaskId()获取返回栈的id 
+          Button button4 = (Button) findViewById(R.id.Button_4);
+          button4.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
+                  startActivity(intent);
+              }
+          })
+  ```
+
+- 修改SecondActivity中`onCreate()`方法的代码
+
+  ```java
+   //打印返回栈id
+          Log.d("SecondActivity", "Task id is: "+getTaskId());
+          Button button2 = (Button) findViewById(R.id.Button_2);
+          button2.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  Intent intent = new Intent(SecondActivity.this,ThirdActivity.class);
+                  startActivity(intent);
+              }
+          });
+  ```
+
+- 修改ThirdActivity中`onCreate()`方法的代码
+
+  ```java
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          //打印返回栈id
+          Log.d("ThirdActivity", "Task id is: "+getTaskId());
+          setContentView(R.layout.third_layout);
+      }
+  ```
+
+- 在FirstActivity界面点击按钮进入到SecondActivity，然后在SecondActivity界面点击按钮进入到ThirdActivity
+
+  
+
+  ![1566997674982](activity-images/1566997674982.png)
+
+  可以看到，SecondActivity的`Task id`不同于FirstActivity和ThirdActivity，这说明SecondActivity确实是存放在一个单独的返回栈里的，而且这个栈中只有SecondActivity这一个活动。按下Back键进行返回，你会发现ThirdActivity竟然直接返回到了FirstActivity，再按下Back键又会返回到SecondActivity，再按下Back键才会退出程序这是为什么呢？其实原理很简单，由于FirstActivity和ThirdActivity是存放在同一个返回栈里的，当在ThirdActivity的界面按下Back键，ThirdActivity会从返回栈中出栈，那么FirstActivity就成为了栈顶活动显示在界面上，因此也就出现了从ThirdActivity直接返回到FirstActivity的情况。然后在FirstActivity界面再次按下Back键，这时当前的返回栈已经空了，于是就显示了另一个返回栈的栈顶活动，即SecondActivity。最后再次按下Back键，这时所有返回栈都已经空了，也就自然退出了程序。
+
+#### 随时随地退出程序
+
+如果我们的程序需要一个注销或者退出的功能该怎么办呢？只需要用一个专门的集合类对所有的活动进行管理就可以了。
+
+- 新建一个`ActivityCollector`类作为活动管理器。
+
+  ```java
+  package top.miku.activitytesttwo;
+  
+  import android.app.Activity;
+  
+  import java.util.ArrayList;
+  import java.util.List;
+  
+  public class ActivityCollector {
+      //创建一个List集合
+      public static List<Activity> activitylist = new ArrayList<>();
+  
+      //创建添加Activity方法
+      public static void addActivity(Activity activity){
+          activitylist.add(activity);
+      }
+  
+      //创建一个删除Activity的方法
+      public static void removeActivity(Activity activity){
+          activitylist.remove(activity);
+      }
+  
+      //创建一个删除所有Activity的方法
+      public static void finishAll(){
+          for (Activity activity : activitylist) {
+              //activity.isFinishing()判断活动是否处于活跃状态falseu或是等待回收状态true
+              if (!activity.isFinishing()) {
+                  activity.finish();
+              }
+          }
+          //移除List集合中的所有元素
+          activitylist.clear();
+      }
+  }
+  ```
+
+- 修改`BaseActivity`中的代码
+
+  ```java
+  package top.miku.activitytesttwo;
+  
+  import android.os.Bundle;
+  import android.util.Log;
+  
+  import androidx.annotation.Nullable;
+  import androidx.appcompat.app.AppCompatActivity;
+  
+  public class BaseActivity extends AppCompatActivity {
+      @Override
+      protected void onCreate(@Nullable Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          //获取了当前实例的类名，并通过Log打印了出来。
+          Log.d("BaseActivity",getClass().getName());
+          //把当前启动的活动，存放到活动管理中
+          ActivityCollector.addActivity(this);
+      }
+  
+      @Override
+      protected void onDestroy() {
+          super.onDestroy();
+          //移除当前被销毁的活动
+          ActivityCollector.removeActivity(this);
+      }
+  }
+  ```
+
+- 要向直接退出程序可以直接调用`ActivityCollector.finishAll()`方法即可
+
+  > 以从ThirdActivity界面直接退出为例
+
+  ```java
+  package top.miku.activitytesttwo;
+  
+  import android.os.Bundle;
+  import android.util.Log;
+  import android.view.View;
+  import android.widget.Button;
+  
+  public class ThirdActivity extends BaseActivity {
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+         //打印返回栈id
+          Log.d("ThirdActivity", "Task id is: "+getTaskId());
+          setContentView(R.layout.third_layout);
+          Button button4 = (Button) findViewById(R.id.button_4);
+          button4.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  //从集合中移除所有的Activity对象
+                  ActivityCollector.finishAll();
+                  //杀死当前进程
+                  /*
+                  * killProcess() 方法用于杀掉一个进程，
+                  * 它接收一个进程id 参数，
+                  * 我们可以通过myPid() 方法来获得当前程序的进程id 。
+                  * 注意的是，killProcess() 方法只能用于杀掉当前程序的进程，我们不能使用这个方法去杀掉其他程序。
+                  * */
+                  android.os.Process.killProcess(android.os.Process.myPid());
+              }
+          });
+      }
+  }
+  ```
