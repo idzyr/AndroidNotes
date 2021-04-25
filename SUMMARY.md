@@ -51,7 +51,7 @@
   * [FrameLayout【帧布局】](./layout/frame_layout.md)
   * [PercentLayout【百分比布局】](./layout/percent_layout.md)
   * [GridLayout【网格布局】](./layout/grid_layout.md)
-* [Intent【意图】](./intent/intent.md)
+* [Intent【意图】](./intent/intent.md)<sup>修</sup>
 * 
 * 其它组件
   * [Toast【气泡消息】](./component-other/toast.md)
