@@ -88,3 +88,97 @@
           return true;
       }
   ```
+
+## 上下文选项菜单
+
+当我们在某个组件上长按时触发
+
+![image-20191124210135835](menu-images/image-20191124210135835.png)
+
+1. 创新选项菜单文件xml
+
+   > 以下步骤都是从Java文件中完成
+
+2. 为组件注册上下文菜单
+
+3. 在activity中重写`onCreateContextMenu()`方法添加解析菜单。
+
+4. 重写`onContextItemSelected` 对选中的菜单项处理
+
+```java
+package top.miku.app1;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText editText; //存放组件
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        //为组件注册上下文菜单
+        editText = findViewById(R.id.edit_text);    //获得组件
+        registerForContextMenu(editText);   //指定要添加上下文的组件
+
+    }
+
+    //添加上下文菜单
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        //解析菜单文件
+        MenuInflater menuInflater = new MenuInflater(this);
+        menuInflater.inflate(R.menu.menu_context,menu);
+
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+    }
+
+    //选中菜单项处理
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        //MenuItem item 代表当前选中的菜单项
+        //通过选中项菜单的id来处理
+        switch (item.getItemId()){
+            case R.id.del:
+                Toast.makeText(this, "选择了删除", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.copy:
+                Toast.makeText(this, "选择了复制", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+
+        return super.onContextItemSelected(item);
+    }
+
+}
+```
+
+- java代码生成菜单
+
+```java
+ @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.add("收藏"); //添加菜单项
+        menu.add("删除");
+    }
+
+//在事件中通过这两个方法注册菜单和打开菜单
+registerForContextMenu(v); //注册菜单
+                openContextMenu(v);//打开菜单
+```

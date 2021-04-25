@@ -13,6 +13,11 @@
 * 应用资源
   * [概览](./chapter_0/part3/providing_resources.md)
   * [应用清单文件](./chapter_0/part3/app_manifest.md)
+  * [values/【字符串资源】](./chapter_0/part3/values.md)
+  * [layout/【界面布局】](./chapter_0/part3/layout.md)
+  * [drawable/【位图】](./chapter_0/part3/drawable.md)
+  * [menu/【菜单】](./chapter_0/part3/menu.md)
+  * [国际化](./chapter_0/part3/globalization.md)
 * AndroidStudio使用
   * 菜单
     * [构建](./android-studio/menus/build.md)
@@ -57,12 +62,13 @@
   * [Toast【气泡消息】](./component-other/toast.md)
   * [Menu【菜单】](./component-other/menu.md)
   * [ToolBar【工具栏】](./component-other/tool-bar.md)
+  * [AlertDialog【对话框】](./component-other/alert-dialog.md)
 * 四大组件
   * [Activity【活动】](./component/activity.md)<sup>修</sup>
   * [Service【服务】](./component/service.md)
 * 数据持久化存储
   * [File方式存储](./persistent-storage/file-storage.md)
-
+* [Fragment【碎片】](./fragment/fragment.md)
 * Android中的HTTP
   * [OKHttp](./http/okhttp.md)
 * 隐私

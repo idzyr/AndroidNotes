@@ -70,6 +70,41 @@ MyProject/
 
 
 
+## 常用资源定义元素
+
+### 数组
+
+- `<array>` 定义普通数组，内容可以是字符串资源/尺寸资源
+- `<integer-array>` 定义整形数组，也可以是十六进制的如0xFF6600
+- `string-array>` 定义字符串类型数组。
+- `<item>` 定义每个数组元素。
+
+**示例；**
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string-array name="strs">
+        <item>身无彩凤双飞翼</item>
+          <item>心有灵犀一点通</item>
+    </string-array>
+</resources>
+```
+
+**调用；**
+
+- xml
+
+```xml
+@array数组名
+```
+
+- java
+
+```java
+getResoutces().getSteingArray(R.array.数组资源名) //获取字符串数组资源，其它get对应的类型即可
+```
+
 ## 访问应用资源
 
 在应用中提供资源后，您可通过引用其资源 ID 来应用该资源。所有资源 ID 都在您项目的 `R` 类中进行定义，该类由 `aapt` 工具自动生成。
