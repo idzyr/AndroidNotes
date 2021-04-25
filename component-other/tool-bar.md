@@ -2,6 +2,12 @@
 
 Action Bar是Android 3.0引入的导航栏功能，然而到5.0的时候，又推出了ToolBar，实际上这两个可以理解为同一个东西，ToolBar是对ActionBar的升级，使用起来也基本是一样的。只是因为ActionBar在实际使用过程中的各种问题，才推出了ToolBar来接替ActionBar。ActionBar通常翻译为操作栏，而到了ToolBar则翻译为工具栏，这里我们统称为工具栏。
 
+常常在界面的最上层，这个区域可以放快速工具按钮等一些内容。
+
+![image-20191127232909982](tool-bar-images/image-20191127232909982.png)
+
+
+
 ## 向 Activity 添加工具栏
 
 
@@ -323,13 +329,94 @@ app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 android:elevation="4dp"
 ```
 
+ 
+
+## 显式和隐藏ToolBar
+
+### 隐藏
+
+**方法一【xml】**
+
+通过安卓清单配置文件 设置主题属性【android:theme】值设置为后缀有.NoAcrionBar的主题时就不显示。
+
+给`<application>`设置那么整个app的activity都不会有了反之只给单独的activity设置那么就只有设置了的会隐藏
+
+**方法二【java】**
+
+```java
+ActionBar actionBar = getSupportActionBar(); //获取ActionBar对象
+actionBar.hide();// 通过hide()方法隐藏
+```
+
+### 显式
+
+**方法一【xml】**
+
+通过隐藏中的方法一可以得知通过修改主题文件可以隐藏，那么当我们设置为没有.NoAcrionBar后缀的主题就可以显式了。
+
+**方法二【java】**
+
+```java
+ActionBar actionBar = getSupportActionBar(); //获取ActionBar对象
+actionBar.show();// 通过show()方法显式
+```
 
 
 
+## 添加ActionView
 
+在ActionBar上显式view组件，如搜索框
 
+1. 创建菜单布局文件
 
+   通过`app:actionViewClass`属性设置要显式的组件，`app:actionLayout` 通过布局文件指定组件【布局文件写法和控件布局一直】
 
+   ```xml
+   <?xml version="1.0" encoding="utf-8"?>
+   <menu xmlns:android="http://schemas.android.com/apk/res/android"
+           xmlns:app="http://schemas.android.com/apk/res-auto">
+       <item
+               android:id="@+id/searcth"
+               android:title="搜索"
+               app:actionViewClass="androidx.appcompat.widget.SearchView"
+               app:showAsAction="always">
+   
+       </item>
+       <item
+               android:id="@+id/add"
+               android:title="添加"
+               app:actionLayout="@layout/menu_bar_add"
+               app:showAsAction="always"></item>
+   </menu>
+   ```
 
+1. 重写`onCreateOptionsMenu(Menu menu)` 方法加载菜单xml
 
+   ```java
+   package top.miku.testactionview;
+   
+   import androidx.appcompat.app.AppCompatActivity;
+   
+   import android.os.Bundle;
+   import android.view.Menu;
+   import android.view.MenuInflater;
+   
+   public class MainActivity extends AppCompatActivity {
+   
+       @Override
+       protected void onCreate(Bundle savedInstanceState) {
+           super.onCreate(savedInstanceState);
+           setContentView(R.layout.activity_main);
+           getSupportActionBar().setDisplayShowTitleEnabled(false);  //隐藏ActingBar标题栏
+       }
+   
+       @Override
+       public boolean onCreateOptionsMenu(Menu menu) {
+           MenuInflater menuInflater = getMenuInflater();  //获得一个MenuInflater对象
+           menuInflater.inflate(R.menu.menu_bar_veiw,menu); //加载布局文件
+           return super.onCreateOptionsMenu(menu);
+       }
+   }
+   ```
 
+![image-20191130143723091](tool-bar-images/image-20191130143723091.png)
