@@ -1,5 +1,5 @@
 # 目录
-* [介绍](README.md) 
+* [介绍](./README.md) 
 * [Android介绍](./chapter_0/android._Introductionmd.md) 
 * 搭建开发环境
 	* [安装JDK](./chapter_0/part1/installl_jdk.md) 
@@ -63,12 +63,16 @@
   * [Menu【菜单】](./component-other/menu.md)
   * [ToolBar【工具栏】](./component-other/tool-bar.md)
   * [AlertDialog【对话框】](./component-other/alert-dialog.md)
+* [Notification【通知】](./notification/notification.md)
+* 数据持久化存储
+  * [File方式存储](./persistent-storage/file-storage.md)
 * 四大组件
   * [Activity【活动】](./component/activity.md)<sup>修</sup>
   * [Service【服务】](./component/service.md)
-* 数据持久化存储
-  * [File方式存储](./persistent-storage/file-storage.md)
 * [Fragment【碎片】](./fragment/fragment.md)
+* 绘画
+  * [Cavnas](./painting/canvas.md)
+* [动画](./animation/animation.md)
 * Android中的HTTP
   * [OKHttp](./http/okhttp.md)
 * 隐私

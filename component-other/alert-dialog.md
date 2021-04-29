@@ -72,3 +72,120 @@
 
 
 ![ProgressDialog](alert-dialog-images/ProgressDialog.gif)
+
+
+
+## 列表对话框
+
+![image-20191130225626774](alert-dialog-images/image-20191130225626774.png)
+
+```java
+AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this); //实例对话框对象
+                    final String[] items = new String[]{
+                        "初音未来","洛天依","爱酱","言和"
+                    };
+                    //设置标题
+                    alertDialog.setTitle("选择你喜欢虚拟偶像");
+                    //设置列表项
+                    //参数1 列表数据 参数2 单击事件监听器【当我们选择了某一项触发】
+                    alertDialog.setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String str = items[which]; //获得选中的项，which表示当前选中项的索引。
+                            Toast.makeText(MainActivity.this, "你选择了"+str, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                   alertDialog.create().show();  //创建并显式对话框
+```
+
+
+
+## 单选按钮对话
+
+![image-20191130232625422](alert-dialog-images/image-20191130232625422.png)
+
+```java
+                    final String[] items1 = new String[]{
+                        "男♂","女♀"
+                    };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("选择你的性别");
+                    //设置单选列表
+                    //参数1 列表项资源 参数2 默认被选中的项int 参数3 监听器
+                    builder.setSingleChoiceItems(items1, 0, new DialogInterface.OnClickListener() {
+                        //witch 表示当前选中项的索引
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(MainActivity.this, "你选择了" + items1[which], Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    //设置一个确认按钮
+                    //参数1 按钮显式的文本 参数2 监听器
+                builder.setPositiveButton("确认",null);
+                builder.create().show();//创建并显式对话框。
+```
+
+## 多选按钮
+
+<img src="alert-dialog-images/image-20191201142119524.png" alt="image-20191201142119524" style="zoom:33%;" />
+
+
+
+```java
+//列表资源
+final String[] items2 = new String[]{
+    "迪丽热巴","古力娜扎","马儿扎哈","上官婉儿"
+};
+//存放个列表项的选中状态。
+final boolean[] isCheckeds = new boolean[]{
+    true,true,false,false
+};
+
+AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
+builder1.setTitle("你喜欢下面那个人物");
+//设置多选列表
+//参数1 列表项数 参数2 那些列表项被选中[注意时boolean类数组不是Boolean对象数组] 参数3 监听器对象
+builder1.setMultiChoiceItems(items2, isCheckeds, new DialogInterface.OnMultiChoiceClickListener() {
+    @Override
+    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+        isCheckeds[which] = isChecked;  //改变选中项的状态。
+        //which 当前选项的索引，isChecked对应索引的选项状态boolean 类型
+    }
+});
+
+//添加确认按钮。
+
+builder1.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        String str = ""; //记录当前选中项内容
+        //检测那些列表项被选中。
+        for (int i = 0; i < isCheckeds.length; i++) {
+            if (isCheckeds[i]){
+                str += " "+items2[i]; //如果是被选中就保存到str中。
+            }
+        }
+
+        //展示结果
+        Toast.makeText(MainActivity.this, "你选择了"+str, Toast.LENGTH_SHORT).show();
+    }
+});
+builder1.create().show(); //创建并显式对话
+```
+
+
+
+## 自定义布局对话
+
+```java
+//创建一个对话框构造器
+      AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+      alertDialog.setView(R.layout.alert_dialog); //指定布局文件。
+      alertDialog.show(); //显式对话框
+```
+
+
+
+
+

@@ -1,118 +1,105 @@
 {
-	"title": "Android开发笔记",
-	"author": "idzyr",
-	"description": "记录学习Android开发的那些事儿",
-	"language": "zh-hans",
-	"gitbook": ">=3.2.3",
-	"sytles": {
-		"website": "styles/website.css",
-		"pdf": "styles/pdf.css"
-	},
-	"pdf": {
-		"pageNumbers": true,
-		"Arial": "Arial",
-		"paperSize": "a3",
-		"fontSize": 18,
-		"margin": {
-			"right": 0,
-			"left": 0,
-			"top": 0,
-			"buttom": 0
-		}
-	},
-	"plugins": [
-		"theme-comscore",
-		"-search",
-		"-sharing",
-		"sharing",
-		"highlight",
-		"fontsettings",
-		"code",
-		"todo",
-		"search-pro",
-		"emphasize",
-		"splitter",
-		"sharing-plus",
-		"tbfed-pagefooter",
-		"flexible-alerts",
-		"donate",
-		"pageview-count",
-		"page-treeview",
-		"lightbox",
-		"back-to-top-button",
-		"auto-scroll-table",
-		"github",
-		"custom-favicon",
-		"expandable-chapters",
-		"chapter-fold",
-		"-highlight",
-		"sunlight-highlighter"
-	],
-	"pluginsConfig": {
-		"fontsettings": {
-			"theme": "white",
-			"family": "sans",
-			"size": 2
-		},
-		"code": {
-			"copyButtons": true
-		},
-		"sharing": {
-			"qq": true,
-			"weibo": true,
-			"google": true,
-			"twitter": true,
-			"all": [
-				"douban",
-				"facebook",
-				"google",
-				"instapaper",
-				"linkedin",
-				"twitter",
-				"weibo",
-				"messenger",
-				"qq",
-				"qzone",
-				"viber",
-				"whatsapp"
-			]
-		},
-		"tbfed-pagefooter": {
-			"copyright": "© 2020 <a href='https://xuelingmiao.com'>雪灵喵</a>",
-			"modify_label": "该文件修订时间：",
-			"modify_format": "YYYY-MM-DD HH:mm:ss"
-		},
-		"donate": {
-			"wechat": "https://res.cloudinary.com/miku52/image/upload/v1547017612/52miku.top_images/wechat_code.png",
-			"alipay": "https://res.cloudinary.com/miku52/image/upload/v1547017612/52miku.top_images/alipay_code.png",
-			"title": "",
-			"button": "赞助",
-			"alipayText": "支付宝打赏",
-			"wechatText": "微信打赏"
-		},
-		"flexible-alerts": {
-			"style": "flat",
-			"note": {
-				"label": "注意"
-			},
-			"tip": {
-				"label": "提示"
-			},
-			"warning": {
-				"label": "警告"
-			},
-			"danger": {
-				"label": "危险"
-			}
-		},
-		"page-treeview": {
-			"copyright": "",
-			"minHeaderCount": "2",
-			"minHeaderDeep": "2"
-		},
-		"github": {
-			"url": "https://github.com/idzyr/AndroidNotes"
-		},
-		"favicon": "./favicon.ico"
-	}
+  "title": "Android开发笔记",
+  "author": "idzyr",
+  "description": "记录学习Android开发的那些事儿",
+  "language": "zh-hans",
+  "gitbook": ">=3.2.3",
+  "styles": {
+    "website": "styles/website.css"
+  },
+  "pdf": {
+    "pageNumbers": true,
+    "Arial": "Arial",
+    "paperSize": "a3",
+    "fontSize": 18,
+    "margin": {
+      "right": 0,
+      "left": 0,
+      "top": 0,
+      "buttom": 0
+    }
+  },
+  "plugins": [
+    "theme-comscore",
+    "splitter",
+    "expandable-chapters",
+    "chapter-fold",
+    "-lunr",
+    "-search",
+    "search-pro",
+    "-sharing",
+    "sharing-plus",
+    "back-to-top-button",
+    "tbfed-pagefooter",
+    "code",
+    "lightbox",
+    "auto-scroll-table",
+    "custom-favicon",
+    "flexible-alerts",
+    "donate",
+    "todo",
+    "intopic-toc"
+  ],
+  "pluginsConfig": {
+    "fontsettings": {
+      "theme": "white",
+      "family": "sans",
+      "size": 2
+    },
+    "code": {
+      "copyButtons": true
+    },
+    "sharing": {
+      "qq": true,
+      "weibo": true,
+      "google": true,
+      "twitter": true,
+      "all": [
+        "douban",
+        "facebook",
+        "google",
+        "instapaper",
+        "linkedin",
+        "twitter",
+        "weibo",
+        "messenger",
+        "qq",
+        "qzone",
+        "viber",
+        "whatsapp"
+      ]
+    },
+    "tbfed-pagefooter": {
+      "copyright": "© 2021 <a href='https://xuelingmiao.com'>雪灵喵</a>",
+      "modify_label": "该文件修订时间：",
+      "modify_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    "donate": {
+      "wechat": "https://res.cloudinary.com/miku52/image/upload/v1547017612/52miku.top_images/wechat_code.png",
+      "alipay": "https://res.cloudinary.com/miku52/image/upload/v1547017612/52miku.top_images/alipay_code.png",
+      "title": "",
+      "button": "赞助",
+      "alipayText": "支付宝打赏",
+      "wechatText": "微信打赏"
+    },
+    "favicon": "./favicon.ico",
+    "flexible-alerts": {
+      "style": "flat",
+      "note": {
+        "label": "注意"
+      },
+      "tip": {
+        "label": "提示"
+      },
+      "warning": {
+        "label": "警告"
+      },
+      "danger": {
+        "label": "危险"
+      }
+    },
+    "intopic-toc": {
+      "label": "导航"
+    }
+  }
 }

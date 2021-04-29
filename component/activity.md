@@ -748,7 +748,7 @@ public class MainActivity extends AppCompatActivity {
 
 **结果；**
 
-![1566651252797](file:///C:/Users/zyrbx/Desktop/Android/AS/%E5%9F%BA%E4%BA%8EAndroidStudio%E5%BC%80%E5%8F%91App-images/1566651252797.png)
+![1566651252797](activity-images/1566651252797.png)
 
 
 
