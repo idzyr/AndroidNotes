@@ -7,12 +7,12 @@
 * 构建首个应用
 	* [创建Android项目](./chapter_0/part2/creating_project.md) 
 	* [创建模拟器](./chapter_0/part2/create_emulator.md)
-	* [运行项目](chapter_0/part2/run_project.md) 
+	* [运行项目](./chapter_0/part2/run_project.md) 
 * Gradle【构建项目】
   * [概览](./gradles/overview.md)
 * 应用资源
   * [概览](./chapter_0/part3/providing_resources.md)
-  * [应用清单文件](./chapter_0/part3/app_manifest.md)
+  * [AndroidManifest应用清单文件](./chapter_0/part3/app_manifest.md)
   * [values/【字符串资源】](./chapter_0/part3/values.md)
   * [layout/【界面布局】](./chapter_0/part3/layout.md)
   * [drawable/【位图】](./chapter_0/part3/drawable.md)
