@@ -3,17 +3,15 @@
 ## 介绍
 Intent是Android程序中各组件之间进行交互的一种重要方式，它不仅可以指明当前组件想要执行的动作，还可以在不同组件之间传递数据。Intent一般可被用于启动活动、启动服务以及发送广播等。
 
-
-
 ## 显示Intent
 
 所为显式Intent，在创建Intent对象时明确指定了要启动组件的名称。也就是明确知道要启动的组件名称。
 
-**示例；**
+### 在自己APP内跳转
 
 从活动1启动活动2
 
-- 在创建一个新的活动（活动2）【具体步骤可以参考，四大组件之Activity中使用AS的空activity模板创建部分】
+- 在现有项目上创建一个新的活动（活动2)
 
   ![1566485434027](intent-images/1566485434027.png)
 
@@ -87,16 +85,49 @@ Intent是Android程序中各组件之间进行交互的一种重要方式，它�
         });
 ```
 
+### 显示Intent跳转到第三方App
 
+**componentName对象** 
 
-## Intent类
-
-**构造函数；**
-
-- `Intent(Context packageContext, Class<?> cls)` 。这个构造函数接收两个参数。
+- `public ComponentName(@NonNull String pkg, @NonNull String cls)`
   - 参数
-    1. 第一个参数Context 要求提供一个启动活动的上下文。
-    2. 第二个参数Class 则是指定想要启动的目标活动，通过这个构造函数就可以构建出Intent 的“意图”。
+    - String pkg 第三方app包名 如`org.chromium.webview_shell`
+    - String cls 被启动组件名称也就是类完整路径含包名`org.chromium.webview_shell.WebViewBrowserActivity` 
+
+如果要通过这种方式启动第三方组件，那么我们需要知道，其**包名**被启动组件名称**完整路径包含包名。**
+
+```java
+  Intent intent = new Intent();
+	/*-------------第一种方法-------------------------*/
+// ComponentName componentName = new ComponentName("org.chromium.webview_shell","org.chromium.webview_shell.WebViewBrowserActivity");
+//   intent.setComponent(componentName); //设置组件名称
+
+/*---------------第二种-----------------------*/
+      // 直接设置组件名           intent.setClassName("org.chromium.webview_shell","org.chromium.webview_shell.WebViewBrowserActivity");
+   startActivity(intent);
+
+```
+
+
+
+### 指定包名和不指定分析
+
+在跳转第三方APP组件时要指定包名和组件名那么为啥在我们APP内跳转就不需要呢？
+
+看上去我们在构造Intent时只传递了上下文和要跳转的组件类，但实际也是获取了包名等信息的。
+
+```java
+//             Intent  mIntent =  new Intent(this,SecondActivity.class); //直接构造
+			/*-----------------实际写法---------------------*/
+                Intent mIntent = new Intent();
+                String packageName = this.getPackageName();	//获取包名
+                String name = SecondActivity.class.getName(); //获取类的完整名称
+                mIntent.setClassName(packageName,name);
+			/*--------------------------------------*/
+                startActivity(mIntent);
+```
+
+
 
 
 
@@ -108,9 +139,9 @@ Intent是Android程序中各组件之间进行交互的一种重要方式，它�
 
 ### Intent过滤器
 
-过滤器是当使用隐藏Intent设置的一些action和data等这些属性就叫做过滤器。
+> 一个组件可以有多个过滤器
 
-#### 设置过滤器
+过滤器是当使用隐藏Intent设置的一些action和data等这些属性就叫做过滤器。配置后组件只会响应符合条件的动作。
 
 通常在AndroidManifest.xml 文件下每个组件下添加`<intent-filter>`标记，在这个标记内指定具体的action和data等属性。
 
@@ -143,11 +174,34 @@ Intent是Android程序中各组件之间进行交互的一种重要方式，它�
     </application>
 ```
 
+#### action
+
+指定动作信息
+
+- `android:name` 指定动作名称，命名规范一般是<packageName>.动作名，如`com.xuelingmiao.LOGIN_INFO`
+
+#### category
+
+类别
+
+- `android:name` 定义类别名称
+
+  系统提供值
+
+  | Category常量        | 对应的字符串                       | 说明                               |
+  | ------------------- | ---------------------------------- | ---------------------------------- |
+  | CATEGORY_DEFAULT    | android.intent.category.DEFAULT    | 默认的Category                     |
+  | CATEGORY_TAB        | android.intent.category.TAB        | 指定Activity作为TabActivity的Tab页 |
+  | CATEGORY_LAUNCHER   | android.intent.category.LAUNCHER   | Activity显示在顶级程序列表中       |
+  | CATEGORY_INFO       | android.intent.category.INFO       | 用于提供包信息                     |
+  | CATEGORY_HOME       | android.intent.category.HOME       | 设置该Activity随系统启动而运行     |
+  | CATEGORY_PREFERENCE | android.intent.category.PREFERENCE | 设置Activity是参数面板             |
 
 
-#### 使用
 
-- 在创建一个新的活动【具体步骤可以参考[手动创建活动](#手动创建一个活动)】
+### 启动自己的Activity
+
+- 在创建一个新的活动
 
   ![1566485434027](intent-images/1566485434027-1619334537889.png)
 
@@ -202,24 +256,57 @@ Intent是Android程序中各组件之间进行交互的一种重要方式，它�
   </manifest>
   ```
 
-**属性；**
+为SecondActivity配置Intent过滤器；
 
-- `setComponent()` 启动一个指定的Activity
+```xml
+ <activity android:name=".SecondActivity">
+     <!-- 配置过滤器 -->
+            <intent-filter>
+                <!-- 定义行动 -->
+                <action android:name="com.xuelingmiao.LOGIN_INFO"/>
+                <!-- 定义类别 -->
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+```
 
-  - 参数 一个Component对象
+启动SecondActivity
 
-    - Component构造参数
-      1. app所在的包名
-      2. 要启动的活动类名完整类名，包含包名。
+```java
+   Intent intent = new Intent();
+                // 设置动作过滤
+                intent.setAction("com.xuelingmiao.LOGIN_INFO");
+                // 添加类别过滤
+                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                startActivity(intent);
+```
 
-  - 实例
 
-    ```java
-    Intent intent = new Intent(); //实例化intent
-    Component component = new Component("top.miku","top.miku.TestActivity"); //实例component对象
-    intent.setComponent(component); //设置component对象
-    startActivity(intent);//启动intent
-    ```
+
+### 隐式Intent跳转到第三方App
+
+设置符合要跳转第三方组件的Intent过滤器条件Action和Category具体设置内容要看第三方app提供的app清单文件中。Android5.1以上的系统要为Category设置包名
+
+```java
+/*  打开浏览器的某个界面
+               <intent-filter>
+                <action android:name="android.speech.action.VOICE_SEARCH_RESULTS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            package="com.android.browser"
+*/
+				Intent intent = new Intent;
+                intent.setAction("android.speech.action.VOICE_SEARCH_RESULTS");
+                intent.addCategory("android.intent.category.DEFAULT");
+                intent.setPackage("com.android.browser"); //为了兼容这里都设置一下包名
+                startActivity(intent);
+```
+
+
+
+
+
+
 
 Action和Data Action是指定将要执行的动作，Data是指定具体的数据的，通常这两个属性一起使用Action也和Category一起使用。
 
@@ -431,9 +518,13 @@ Activity类中提供了一个`startActivity()` 方法，这个方法是专门用
   </activity>
   ```
 
-##### 显式和隐式区别
+## 显式和隐式区别
 
 ![image-20191123210429674](intent-images/image-20191123210429674.png)
+
+
+
+
 
 ##### 更多隐式Intent的用法
 
@@ -534,3 +625,15 @@ setData()接收一个`Uri` 对象，主要用于指定当前Intent正在操作�
 ```
 
 ![tel](intent-images/tel.gif)
+
+
+
+## Intent类
+
+**构造函数；**
+
+- `Intent(Context packageContext, Class<?> cls)` 。这个构造函数接收两个参数。
+  - 参数
+    1. 第一个参数Context 要求提供一个启动活动的上下文。
+    2. 第二个参数Class 则是指定想要启动的目标活动，通过这个构造函数就可以构建出Intent 的“意图”。
+
