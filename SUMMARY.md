@@ -56,8 +56,6 @@
   * [FrameLayout【帧布局】](./layout/frame_layout.md)
   * [PercentLayout【百分比布局】](./layout/percent_layout.md)
   * [GridLayout【网格布局】](./layout/grid_layout.md)
-* [Intent【意图】](./intent/intent.md)<sup>修</sup>
-* 
 * 其它组件
   * [Toast【气泡消息】](./component-other/toast.md)
   * [Menu【菜单】](./component-other/menu.md)
@@ -66,6 +64,7 @@
 * [Notification【通知】](./notification/notification.md)
 * 数据持久化存储
   * [File方式存储](./persistent-storage/file-storage.md)
+* [Intent【意图】](./intent/intent.md)<sup>修</sup>
 * 四大组件
   * [Activity【活动】](./component/activity.md)<sup>修</sup>
   * [Service【服务】](./component/service.md)
