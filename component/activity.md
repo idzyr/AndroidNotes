@@ -24,7 +24,7 @@
 
   
 
-- 在`app/src/main/java/top.miku.activitytest`创建一个活动
+- 在`app/src/main/java/top.miku.activitytest`创建一个活动命名规则；活动名称+Activity
 
   依次选择
 
@@ -60,7 +60,7 @@ public class FirstActivity extends AppCompatActivity {
 
   
 
-- 接着在layout目录下创建first_layout.xml
+- 接着在layout目录下创建first_layout.xml 命名规则activity_活动名称
 
   ![1566378864402](activity-images/1566378864402.png)
 
@@ -106,7 +106,7 @@ public class FirstActivity extends AppCompatActivity {
 
 ### 注册活动
 
-在`AndroidManifest`文件中注册活动。
+在`AndroidManifest`文件中注册活动这种注册都叫静态注册。
 
 - 打开`app/src/main/AndroidManifest.xml`中注册活动【一般IDE会自动注册】
 
@@ -123,7 +123,7 @@ public class FirstActivity extends AppCompatActivity {
           android:supportsRtl="true"
           android:theme="@style/AppTheme">
           <!-- 注册一个活动 -->
-          //android:name指定要注册的活动因为外层已经声明了包所以这里可以忽略直接写.FirstActivity
+          //android:name指定要注册的活动因为外层已经声明了其所在包所以这里可以忽略直接写.FirstActivity
           //android:label 指定活动标题
           <activity android:name=".FirstActivity" android:label="@string/app_name">
               <!-- 把当前活动设置为主活动【程序启动的第一个活动】 -->
@@ -187,8 +187,6 @@ Activity有两种启动方式，一是作为app的主activity启动。二是被�
 
 ### 主启动activity
 
-> AndroidManifest.xml
-
 在AndroidManifest.xml注册活动时添加`intent-filter`标记
 
 ```xml
@@ -204,8 +202,6 @@ Activity有两种启动方式，一是作为app的主activity启动。二是被�
 ```
 
 ### 启动其它活动
-
-> startActivity()
 
 ```java
 package top.miku.testactivity;
@@ -245,15 +241,13 @@ public class MainActivity extends AppCompatActivity {
 
 调用`finish();`方法关闭活动【销毁活动】
 
-
-
 ## Activity之间跳转
 
-
-
-
+详情见[Intent【意图】](../intent/intent.md)
 
 ## Activity之间数据传递
+
+> 也可以说是组件之间的数据传递，这里只是以Activity为例子
 
 ### 使用Bundle传值
 
@@ -613,7 +607,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-### 不使用Bundle传值
+### 直接使用Intent传值
 
 #### 向下一个活动传递数据
 
@@ -752,7 +746,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-#### 问题
+**问题**
 
 - 解决用户不是通过点击按钮来结束活动无法接收返回数据问题到SecondActivity中重写`onBackPressed()`
 
@@ -773,6 +767,112 @@ public class MainActivity extends AppCompatActivity {
           finish();
       }
   ```
+
+
+
+### 传递对象类型数据
+
+- 被传递对象要实现Android提供的可序列化接口`android.os.Parcelable;`
+- 使用Intent的`public @NonNull Intent putExtra(String name, @Nullable Parcelable value)` 重载传递实现了`Parcelable`接口的对象。
+- 接收数据处，获取intent通过intent的`getParcelableExtra()`方法获取传递过来的数据对象，数据接收变量类型直接使用被传递对象类型即可。然后正常使用这个对象来操作数据。
+
+**user数据类；**
+
+```java
+package com.xuelingmiao.learnactivity;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable {
+    private String name;
+    private int age;
+    private float height;
+
+    protected User(Parcel in) {
+        name = in.readString();
+        age = in.readInt();
+        height = in.readFloat();
+    }
+
+    public User() {
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(age);
+        dest.writeFloat(height);
+    }
+}
+
+```
+
+**对象传递和接收；**
+
+```java
+/*----------传递对象【第一个界面】----------------------------*/
+				Intent intent = new Intent();
+               User user = new User();
+                user.setName("张三");
+                user.setAge(25);
+                user.setHeight(167.0F);
+                intent.setClass(this,ThirdActivity.class);
+                intent.putExtra("user_data",user);	//存储数据
+                startActivity(intent);
+/*----------获取数据处理【第二个界面】----------------------------*/
+  Intent intent = getIntent();
+        User user_data = intent.getParcelableExtra("user_data");//获取传递的对象
+        Log.d(TAG, "onCreate: name"+user_data.getName()+"age;"+user_data.getAge()+"height"+user_data.getHeight());
+
+```
+
+
+
+> **提示；**
+>
+> 如果要传递一个位图对象Bitmap那么也可以使用上面的方案，因为Bitmap实现了Parcelable接口。
 
 
 
