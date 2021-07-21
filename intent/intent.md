@@ -143,7 +143,13 @@ Intent是Android程序中各组件之间进行交互的一种重要方式，它�
 
 过滤器是当使用隐藏Intent设置的一些action和data等这些属性就叫做过滤器。配置后组件只会响应符合条件的动作。
 
-通常在AndroidManifest.xml 文件下每个组件下添加`<intent-filter>`标记，在这个标记内指定具体的action和data等属性。
+通常在AndroidManifest.xml 文件下每个组件下添加`<intent-filter>`标记作为自己组件可响应动作的过滤，在这个标记内指定具体的action和data等属性，
+
+如果我们要启动含有过滤器的组件无论这个组件是自己的还是第三方的，我们都需要在后端代码中为Intent设置符合组件要求的过滤器内容，可用使用Intent的以下方法为其配置。
+
+- `setAction()` 设置目标组件动作信息
+- `addCategory()` 添加目标组件类别
+- `setData()` 设置目标组件所需数据
 
 如AndroidStudio生成的xml清单文件
 
@@ -178,11 +184,19 @@ Intent是Android程序中各组件之间进行交互的一种重要方式，它�
 
 指定动作信息
 
+**属性；**
+
 - `android:name` 指定动作名称，命名规范一般是<packageName>.动作名，如`com.xuelingmiao.LOGIN_INFO`
+
+  通常其值使用常量来封装。系统常量参考地址
+
+  https://developer.android.google.cn/reference/android/content/Intent#standard-categories
 
 #### category
 
 类别
+
+**属性；**
 
 - `android:name` 定义类别名称
 
@@ -198,6 +212,20 @@ Intent是Android程序中各组件之间进行交互的一种重要方式，它�
   | CATEGORY_PREFERENCE | android.intent.category.PREFERENCE | 设置Activity是参数面板             |
 
 
+
+#### data
+
+数据
+
+**属性；**
+
+- `android:scheme`用于指定数据的协议部分也可以说是一个约束（约束就是一种双方都要遵守的格式），如https一个
+
+- `android:host` 用于指定数据的主机名部分，如www.baidu.com`
+
+- `android:port`用于指定数据的端口部分，一般紧随在主机名之后。
+
+- `android:mimeType`用于指定可以处理的数据类型，允许使用通配符的方式进行指定。
 
 ### 启动自己的Activity
 
@@ -304,30 +332,23 @@ Intent是Android程序中各组件之间进行交互的一种重要方式，它�
 
 
 
+### URI
 
-
-
-
-Action和Data Action是指定将要执行的动作，Data是指定具体的数据的，通常这两个属性一起使用Action也和Category一起使用。
-
-- Action 通常是使用Intent的常量来指定的。
-
-  - `setAction()` 方法设置该属性。
-
-  - 具体常用可以参考以下地址
-
-    https://developer.android.google.cn/guide/components/intents-common?hl=zh_cn#java
-
-- Data 是一个URI 不同的Action的URI是不同的。
-
-  - `setData()` 方法设置该属性。
-  - 每个Acton都有对应的URI 局里以下【联系人，拨打电话，显式内容】
+- 每个Acton都有对应的URI 局里以下【联系人，拨打电话，显式内容】
 
 ![image-20191123140332363](intent-images/image-20191123140332363.png)
 
-- 实例调用电话页面和短信页面 **更多页面调用可以参考上面的Action常量文档**
+### 隐式意图跳转到第三方App（含数据传递）
+
+在日常开发中Action是指定将要执行的动作，Data是指定具体的数据的，通常这两个属性一起使用Action也和Category一起使用。
+
+**示例；**
+
+调用电话页面和短信
 
 ![intentAction](intent-images/intentAction.gif)
+
+- `Uri.parse(String string)` 将符合约束的字符串解析为一个uri对象
 
 ```java
 package top.miku.testintent;
@@ -356,8 +377,7 @@ package top.miku.testintent;
 
           }
 
-          //创建一个打击事件监听七
-
+		
           View.OnClickListener onClickListener = new View.OnClickListener() {
               @Override
               public void onClick(View v) {
@@ -380,143 +400,7 @@ package top.miku.testintent;
       }
 ```
 
-- Category 对执行的动作类别进行描述，通常和**action**属性一起使用。
 
-  - `addCategory()` 来指定属性。通过Intent的常量来指定值
-
-  - 常用
-
-    - `CATEGORY_LAUNCHER` 把Activity作为app启动的默认活动页。
-    - `CATEGORY_HOME` 返回系统桌面
-
-  - 更多常量参考地址
-
-    https://developer.android.google.cn/reference/android/content/Intent#standard-categories
-
-  - 实例关闭并返回桌面
-
-![intentCategory](intent-images/intentCategory.gif)
-
-- - ```java
-    Intent intent = new Intent();//实例化Intent对象
-    intent.setAction(Intent.ACTION_MAIN); //设置为主活动
-                        intent.addCategory(Intent.CATEGORY_HOME); //关闭程序并返回系统桌面
-                        startActivity(intent); //启动活动
-    ```
-
-- Extras //添加附加信息，通常用作活动传值。
-
-  - `putExtras(Bundle对象)` 保存数据
-  - `getExtras()`获取保存的bundle对象。
-  - 实例参考 [使用Bundle在活动之间传递数据](#使用Bundle在活动之间传递数据)
-
-- Flags app程序如何去启动另一个Activity或当前活动属于那个**Task**或程序启动以后如何处理。
-
-  - `setFlags()` 指定属性值。通过Intent的常量来设置。
-
-  - `FLAG_ACTIVITY_NO_HISTORY` 让启动的活动不在历史栈中，当用户离开后自动销毁活动。
-
-  - 更多常量参考
-
-    https://developer.android.google.cn/reference/android/content/Intent#flags 表格中以Flags开头的
-
-##### 显式Intent 类型
-
-所为显式Intent，显式Intent就是创建Intent对象时**指定**目标要启动的目标组件名称。也就是明确知道要启动的组件名称。
-
-`Intent(Context packageContext, Class<?> cls)` 。这个构造函数接收两个参数。
-
-- 参数
-  - 第一个参数Context 要求提供一个启动活动的上下文。
-  - 第二个参数Class 则是指定想要启动的目标活动，通过这个构造函数就可以构建出Intent 的“意图”。
-
-Activity类中提供了一个`startActivity()` 方法，这个方法是专门用于启动活动的，它接收一个Intent 参数。
-
-```java
-/*—————————————启动一个活动绑定活动中书写———————————————————————*/
-        Button button3 = (Button) findViewById(R.id.button_3);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //创建Intent对象
-                Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
-                //启动这个活动
-                startActivity(intent);
-            }
-        });
-```
-
-##### 隐式Intent类型
-
-相比于显式Intent，隐式Intent则含蓄了许多，它**并不明确指出**我们想要启动哪一个活动，而是指定了一系列更为抽象的**action** 和**category** 等信息，然后交由系统去分析这个Intent，并帮我们找出合适的活动去启动。什么叫作合适的活动呢？简单来说就是可以响应我们这个隐式Intent的活动
-
-- 到AndroidManifest.xml给要响应的活动配置**action**和**category**
-
-  ```xml
-  <activity
-                  android:name=".SecondActivity"
-                  android:label="第二个活动">
-     // 只有<action> 和<category> 中的内容同时能够匹配上Intent中指定的action 和category 时，这个活动才能响应该Intent。
-              <intent-filter>
-                  <!- top.miku.activitytest是main/java中的包 -->
-                  //ACTION_START == 行动开始
-                  //指定活动是可以响应的
-                  <action android:name="top.miku.activitytest.ACTION_START"/>
-                  //<category> 标签则包含了一些附加信息，更精确地指明了当前的活动能够响应的Intent中还可能带有的category 
-                  <category android:name="android.intent.category.DEFAULT"/>
-              </intent-filter>
-  </activity
-  ```
-
-- FirstActivity中书写以下代码
-
-  ```java
-   /*——————————启动一个隐藏的Intent——————————*/
-          Button button4 = (Button) findViewById(R.id.button_4);
-          button4.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                  //隐藏模式
-                  Intent intent = new Intent("top.miku.activitytest.ACTION_START");
-                  startActivity(intent);
-              }
-          });
-  /*
-      我们使用了Intent的另一个构造函数，直接将action 的字符串传了进去，表明我们想要启动能够响应com.example.activitytest.ACTION_START 这个action 的活动。那前面不是说要<action> 和<category> 同时匹配上才能响应的吗？怎么没看到哪里有指定category 呢？这是因为android.intent.category.DEFAULT 是一种默认的category ，在调用startActivity() 方法的时候会自动将这个category 添加到Intent中。
-  */
-  ```
-
-- 多个category匹配一个活动
-
-  ```java
-   /*——————————多个category——————————————————————*/
-          //每个Intent中只能指定一个action ，但却能指定多个category
-          Button button5 = (Button) findViewById(R.id.button_5);
-          button5.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                  Intent intent = new Intent("top.miku.activitytest.ACTION_START");
-                  //添加一个自定义值的category
-                  intent.addCategory("top.miku.activitytest.MY_CATEGORY");
-                  startActivity(intent);
-              }
-          });
-  ```
-
-- 到AndroidManifest.xml中添加这个新的category值
-
-  ```xml
-  <activity
-                  android:name=".SecondActivity"
-                  android:label="第二个活动">
-              <intent-filter>
-                  <action android:name="top.miku.activitytest.ACTION_START"/>
-                  <category android:name="android.intent.category.DEFAULT"/>
-                  <!-- 添加的自定义category -->
-                  <category android:name="top.miku.activitytest.MY_CATEGORY"/>
-              </intent-filter>
-  </activity>
-  ```
 
 ## 显式和隐式区别
 
@@ -526,9 +410,11 @@ Activity类中提供了一个`startActivity()` 方法，这个方法是专门用
 
 
 
-##### 更多隐式Intent的用法
+## 更多隐式Intent的用法
 
-使用隐式Intent，我们不仅可以启动自己程序内的活动，还可以启动其他程序的活动，这使得Android多个应用程序之间的功能共享成为了可能。
+### 打开网页/响应打开网页
+
+#### 打开网页
 
 ```java
 /*————————————隐式调用本地浏览器打开网页————————————*/
@@ -547,20 +433,22 @@ Activity类中提供了一个`startActivity()` 方法，这个方法是专门用
         });
 ```
 
-- `setData()`
+- `setData()`setData()接收一个`Uri` 对象，主要用于指定当前Intent正在操作的数据，而这些数据通常都是以字符串的形式传入到`Uri.parse()` 方法中解析产生的。
 
-setData()接收一个`Uri` 对象，主要用于指定当前Intent正在操作的数据，而这些数据通常都是以字符串的形式传入到`Uri.parse()` 方法中解析产生的。
+#### 响应打开网页
 
-与此对应，我们还可以在`<intent-filter>` 标签中再配置一个`<data>` 标签，用于更精确地指定当前活动能够响应什么类型的数据。`<data>` 标签中主要可以配置以下内容。
+让我们的Activity支持网页打开。
 
-1. `android:scheme`用于指定数据的协议部分，如上例中的https部分。
-2. `android:host` 用于指定数据的主机名部分，如上例中的[www.baidu.com部分。](http://www.baidu.com部分。)
+与系统浏览器一样，我们也可以配置Intent过滤器来实现此功能，需要在`intent-filter`配置一个`<data>` 标签，用于更精确地指定当前活动能够响应什么类型的数据。`<data>` 标签中主要有以下属性。
+
+1. `android:scheme`用于指定数据的协议部分，如上例中的https部分。一个约束
+2. `android:host` 用于指定数据的主机名部分，如上例中的`www.baidu.com`部分
 3. `android:port`用于指定数据的端口部分，一般紧随在主机名之后。
 4. `android:mimeType`用于指定可以处理的数据类型，允许使用通配符的方式进行指定。
 
 只有`<data>` 标签中指定的内容和Intent中携带的Data完全一致时，当前活动才能够响应该Intent。不过一般在`<data>` 标签中都不会指定过多的内容，如上面浏览器示例中，其实只需要指定`android:scheme` 为http，就可以响应所有的http协议的Intent了
 
-##### 响应打开网页
+**示例；**
 
 - 新建一个activity，ThirdActivity
 
@@ -584,18 +472,18 @@ setData()接收一个`Uri` 对象，主要用于指定当前Intent正在操作�
 
 - ThirdActivity.java中的代码不做修改
 
-- 最后在AndroidManifest.xml中修改ThirdActivity的注册信息
+- 最后在AndroidManifest.xml中修改ThirdActivity的注册信息配置Intent过滤器
 
   ```xml
   activity
                   android:name=".ThirdActivity"
                   android:label="响应http">
               <intent-filter>
-                  //当前活动是可以被响应的
+                 <!-- 定义活动行为 -->
                   <action android:name="android.intent.action.VIEW" />
-                  //响应类型默认
+                  <!-- 类型默认 -->
                   <category android:name="android.intent.category.DEFAULT" />
-                  //指定响应的协议
+                    <!--指定响应的协议 -->
                   <data android:scheme="https" />
               </intent-filter>
           </activity>
@@ -605,7 +493,9 @@ setData()接收一个`Uri` 对象，主要用于指定当前Intent正在操作�
 
   ![1566626631935](intent-images/1566626631935.png)
 
-##### 调用系统拨打电话
+
+
+### 调用系统拨打电话
 
 ```java
 /*————————————拨打电话————————————*/
@@ -624,7 +514,7 @@ setData()接收一个`Uri` 对象，主要用于指定当前Intent正在操作�
         });
 ```
 
-![tel](intent-images/tel.gif)
+<img src="intent-images/tel.gif" alt="tel" style="zoom: 50%;" />
 
 
 
