@@ -967,7 +967,7 @@ public class PhotographActivity extends AppCompatActivity {
 
 
 
-## 活动生明周期
+## 活动生命周期
 
 ### 返回栈
 
@@ -1040,8 +1040,8 @@ Activity类中定义了7个回调方法，覆盖了活动生命周期的每一�
 - `onStart()` 被调用同时活动进入可见但是不可以交互。
 - `onResume()` 活动完全可见并且可以交互，获得焦点。
 - 活动运行中
-- `onPause()`  如果这时另一个活动进入前台，活动处于暂停状态不可以交换。
-  - 这时一个优先级高于当前app的程序需要执行，恰好当前内存不足。应用进程被杀死。这时当用户又导航到该活动时活动在从`onCreate()` 执行。
+- `onPause()`  如果这时另一个正常活动进入前台，那么当前活动将处于停止状态会执行`onPause()`后接着执行`onStop()`，如果进入前台的不是一个活动而是一个对话框那么只会执行`onPause()`因为对话框没有完全遮挡住原活动。
+  - 这时如果有一个优先级高于当前app的程序需要执行，恰好当前内存不足。应用进程被杀死。这时当用户又导航到该活动时活动在从`onCreate()` 执行。
   - 这时用户又退回到该活动，回到`onResume()`
 - `onStop()` 活动不在可见
   - 这时一个优先级高于当前app的程序需要执行，恰好当前内存不足。应用进程被杀死。这时当用户又导航到该活动时活动在从`onCreate()` 执行。
@@ -1050,8 +1050,6 @@ Activity类中定义了7个回调方法，覆盖了活动生命周期的每一�
 - 活动关闭
 
 #### 体验活动的生命周期
-
-> 主要是MainActivity活动
 
 - 创建一个新的项目命名为ActivityLifeCycleTest【活动生命周期测试】
 
@@ -1173,7 +1171,6 @@ Activity类中定义了7个回调方法，覆盖了活动生命周期的每一�
       }
       /*—————————————————重写活动生存期回调—————————————————————————————————*/
       //重写启动方法【可以见状态】
-      //当活动启动后可以和用户交互时调用
       @Override
       protected void onStart() {
           super.onStart();
@@ -1211,18 +1208,18 @@ Activity类中定义了7个回调方法，覆盖了活动生命周期的每一�
       }
   }
   ```
-
-  1. 当MainActivity第一次被创建时会依次执行`onCreate()`、`onStart()`和`onResume()`方法.
-
-     ![1566718451971](activity-images/1566718451971.png)
-
-  2. 点击第一个按钮，启动NormalActivity
-
-     ![1566718689191](activity-images/1566718689191.png)
-
-  3. 返回MainAc由于之前MainActivity已经进入了停止状态，所以`onRestart()`方法会得到执行，之后又会依次执行`onStart()`和`onResume()`方法。**注意**此时`onCreate()`方法不会执行，因为MainActivity并没有重新创建。
-
-     ![1566719135562](activity-images/1566719135562.png)
+  
+1. 当MainActivity第一次被创建时会依次执行`onCreate()`、`onStart()`和`onResume()`方法.
+  
+   ![1566718451971](activity-images/1566718451971.png)
+  
+2. 点击第一个按钮，启动NormalActivity相当于活动正常运行时另一个活动进入了前台。或者我们看视频时突然来了电话。
+  
+   ![1566718689191](activity-images/1566718689191.png)
+  
+3. 返回MainAc由于之前MainActivity已经进入了停止状态，所以`onRestart()`方法会得到执行，之后又会依次执行`onStart()`和`onResume()`方法。**注意**此时`onCreate()`方法不会执行，因为MainActivity并没有重新创建。
+  
+   ![1566719135562](activity-images/1566719135562.png)
 
 1. 再点击第二个按钮，启动DialogActivity可以看到，只有`onPause()`方法得到了执行，`onStop()`方法并没有执行，这是因为DialogActivity并没有完全遮挡住MainActivity，此时MainActivity只是进入了暂停状态，并没有进入停止状态。
 
@@ -1238,9 +1235,9 @@ Activity类中定义了7个回调方法，覆盖了活动生命周期的每一�
 
    ![1566719935148](activity-images/1566719935148.png)
 
-#### 活动被回收了怎么办
+#### 被回收的活动数据恢复
 
-当一个活动进入到了停止状态，是有可能被系统回收的。那么想象以下场景：应用中有一个活动A，用户在活动A的基础上启动了活动B，活动A就进入了停止状态，这个时候由于系统内存不足，将活动A回收掉了，然后用户按下Back键返回活动A，会出现什么情况呢？其实还是会正常显示活动A的，只不过这时并不会执行`onRestart()` 方法，而是会执行活动A的`onCreate()`方法，因为活动A在这种情况下会被重新创建一次。这样看上去好像一切正常，可是别忽略了一个重要问题，活动A中是可能存在临时数据和状态的。打个比方，MainActivity中有一个文本输入框，现在你输入了一段文字，然后启动NormalActivity，这时MainActivity由于系统内存不足被回收掉，过了一会你又点击了Back键回到MainActivity，你会发现刚刚输入的文字全部都没了，因为MainActivity被重新创建了。
+当一个活动进入到了**停止状态**，是有可能被系统回收的。那么想象以下场景：应用中有一个活动A，用户在活动A的基础上启动了活动B，活动A就进入了停止状态，这个时候由于系统内存不足，将活动A回收掉了，然后用户按下Back键返回活动A，会出现什么情况呢？其实还是会正常显示活动A的，只不过这时并不会执行`onRestart()` 方法，而是会执行活动A的`onCreate()`方法，因为活动A在这种情况下会被重新创建一次。这样看上去好像一切正常，可是别忽略了一个重要问题，活动A中是可能存在临时数据和状态的。打个比方，MainActivity中有一个文本输入框，现在你输入了一段文字，然后启动NormalActivity，这时MainActivity由于系统内存不足被回收掉，过了一会你又点击了Back键回到MainActivity，你会发现刚刚输入的文字全部都没了，因为MainActivity被重新创建了。
 
 解决Activity中还提供了一个`onSaveInstanceState()`回调方法，这个方法可以保证在活动被回收之前**一定会被调用**，因此我们可以通过这个方法来解决活动被回收时临时数据得不到保存的问题。
 
@@ -1277,13 +1274,110 @@ Activity类中定义了7个回调方法，覆盖了活动生命周期的每一�
 
 
 
+### 横竖屏切换生命周期
+
+竖屏正常生命；
+
+![image-20210727153239169](activity-images/image-20210727153239169.png)
+
+当进行屏幕旋转切换为横屏；
+
+暂停，停止，销毁当前活动然后重新创建。
+
+![image-20210727153422222](activity-images/image-20210727153422222.png)
+
+再切换回竖屏；
+
+和上面一样，都是活动被销毁然后重新创建。
+
+![image-20210727154206464](activity-images/image-20210727154206464.png)
+
+**总结；**
+
+当进行横竖屏切换时Activity会被销毁重新创建。
+
+**横竖屏切换场景；**
+
+1. 游戏开发
+2. 视频播放器
+3. 其它场景
+
+#### Activity横竖屏切换对开发影响
+
+比如我们正在播放，视频然后进行了横竖屏切换，结果导致，播放进度重新开始，控件被重新创建，因为我们切换时Activity从新走了一遍生命周期。
+
+![rotation-problem](activity-images/rotation-problem.gif)
+
+每次切换后进度条也不在是同一个对象。
+
+![image-20210727221751757](activity-images/image-20210727221751757.png)
+
+```java
+package com.xuelingmiao.learnactivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.SeekBar;
+
+public class SwichActivity extends AppCompatActivity {
+
+    private static final String TAG = "SwitchActivity";
+    private SeekBar playProgress;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_swicht);
+        initView();
+        Log.d(TAG, "onCreate: ");
+    }
+
+    private void initView() {
+        playProgress = findViewById(R.id.play_progress);
+        Log.d(TAG, "initView: playProgress == "+playProgress.toString());
+        /**
+         * 在onCreate中设置值必须通过post()方法来完成。
+         */
+        playProgress.post(() -> {
+          playProgress.setProgress(0);  //初始控件状态设置为0
+        });
+
+    }
 
 
-### 活动的启动模式
 
-启动模式一共有4种，分别是standard、singleTop、singleTask和singleInstance，可以在AndroidManifest.xml中通过给`<activity>`标签指定`android:launchMode`属性来选择启动模式。
+}
+```
 
-#### standard【活动默认启动模式】
+**问题解决；**
+
+1. 禁止旋转指定屏幕方向【适合游戏开发】
+
+   在清单文件中为当前Activity设置屏幕方向属性`android:screenOrientation`
+
+   landscape表示竖屏
+
+2. 对配置不敏感【适合视频app开发】
+
+   在清单文件中对当前Activity配置`android:configChanges`属性一般为其同时设置以下几个值
+
+   `keyboardHidden|screenSize|orientation` 当以上值无论那个发生变化Activity不会变更
+
+   - `keyboardHidden` 隐藏键盘
+
+   - `screenSize` 屏幕尺寸，屏幕变化
+   - `orientation` 方向
+
+
+
+## 活动的启动模式
+
+启动模式一共有4种，分别是standard（标准）、singleTop（单顶）、singleTask（单一任务）和singleInstance（单实例），可以在AndroidManifest.xml中通过给`<activity>`标签指定`android:launchMode`属性来选择启动模式。
+
+#### standard【默认启动模式】
 
 standard模式。每次启动活动重新创建一个活动实例，无论被创建的活动是否在栈顶都会重新创建一个实例。
 
@@ -1316,9 +1410,9 @@ standard模式。每次启动活动重新创建一个活动实例，无论被创
 
 - 从打印信息中我们就可以看出，每点击一次按钮就会创建出一个新的FirstActivity实例。此时返回栈中也会存在3个FirstActivity的实例，因此你需要连按3次Back键才能退出程序。
 
-#### singleTop
+#### singleTop【单顶】
 
-当活动的启动模式指定为singleTop，在启动活动时如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例。
+当活动的启动模式指定为singleTop，在启动活动时如果发现返回栈的栈顶**已经是该活动**，则认为可以直接使用它，**不会再创建**新的活动实例。
 
 ![00074](activity-images/00074.jpeg)
 
@@ -1609,3 +1703,4 @@ standard模式。每次启动活动重新创建一个活动实例，无论被创
       }
   }
   ```
+
