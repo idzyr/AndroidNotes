@@ -66,7 +66,7 @@
   * [File方式存储](./persistent-storage/file-storage.md)
 * [Intent【意图】](./intent/intent.md)<sup>修</sup>
 * 四大组件
-  * [Activity【活动】](./component/activity.md)<sup>修</sup>
+  * [Activity【活动】](./component/activity.md)
   * [Service【服务】](./component/service.md)
 * [Fragment【碎片】](./fragment/fragment.md)
 * 绘画
