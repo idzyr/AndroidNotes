@@ -64,7 +64,7 @@
 * [Notification【通知】](./notification/notification.md)
 * 数据持久化存储
   * [File方式存储](./persistent-storage/file-storage.md)
-* [Intent【意图】](./intent/intent.md)<sup>修</sup>
+* [Intent【意图】](./intent/intent.md)
 * 四大组件
   * [Activity【活动】](./component/activity.md)
   * [Service【服务】](./component/service.md)
