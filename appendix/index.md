@@ -1,4 +1,4 @@
 # 附件下载
 
 ## 流程图
-- [Activity生命周期](./Activity生命周期.vsdx)
+- <a href="Activity生命周期.vsdx">Activity生命周期</a>
