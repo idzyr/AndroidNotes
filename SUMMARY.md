@@ -88,4 +88,4 @@
 * 实用
   * [相关信息获取](./utils/getting-information.md)
 * 设计思想
-* [附件](./appendix/index.html)
+* [附件](./appendix/index.md)
