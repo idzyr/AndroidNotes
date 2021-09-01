@@ -2,11 +2,42 @@
 
 可以在activity中嵌套部分页面为Fragment页面同样也支持同一个Fragment重用。类似于HTML中的iframe标签
 
+### Fragment的几个子类：
+
+ps:很多时候我们都是直接重写Fragment,inflate加载布局完成相应业务了,子类用的不多,等需要的 时候在深入研究!
+
+- 对话框:**DialogFragment**
+- 列表:**ListFragment**
+- 选项设置:**PreferenceFragment**
+- WebView界面:**WebViewFragment**
+
 ## 生命周期
 
 一个Fragment必须被嵌入到activity中。它的生命和其所在的activity紧密关联，当activity被销毁那么同样fragment也会被销毁。
 
+
+
 ![image-20191122125552809](fragment-images/image-20191122125552809.png)
+
+
+
+<img src="fragment-images/image-20210830200011114.png" alt="image-20210830200011114" style="zoom:150%;" />
+
+只少要重写onCreateView也是可以的、
+
+- `onOnlnflate()` 该方法只在我们直接用**标签在布局文件**中定义的时候才会被调用
+
+- `onAttach() `当该Fragment被添加到Activity中会回调，只会被调用一次
+- `onCreate()` 创建Fragment 回i，**只会被调用一次**
+- `onCreateView()` 每次创建，绘制该Fragment的View组件时回调，会将显示的View返回
+- `onActivityCreate()` 当Fragment所在的Activity启动完成后回调
+- `onStart()` 启动Fragment时被回调
+- `onResume()`恢复Fragment时被回调，`onStart()`方法后一定回调`onResume()`方法`onStart`可见，`onResume`后**才能交互**
+- `onPause()`  暂停Fragment时调用
+- `onStop() ` 停止暂停Fragment时调用
+- `onDestroyView()`销毁该Fragment所包含的View组件时使用
+- `onDestroy()`销毁Fragment时被回调
+- `onDetach()` 将该Fragment从Activity被删除/替换完成后回调该方法；`onDestroy0`方法后一定会回调该方法该方法**只调用一次**
 
 
 
@@ -282,3 +313,116 @@ public class MainActivity extends AppCompatActivity {
       };
   }
   ```
+
+
+
+## 管理和事务
+
+### 管理
+
+Activity管理Fragment主要依靠FragmentManager可以调
+用。
+
+- `findFragmentByld()` 获取指定的fragment
+- `popBackStack()`方法弹出后台Fragment
+- `addToBackStack(null)`加入栈
+- `addOnBackStackChangeListener` 监听后台栈的变化：
+
+### 事务
+
+如果是增删替换Fragment的话，则需要借助FragmentTransaction对象：同时添加Fragment的操作.记得操作完后再使用`commit()`方法提交事务哦！
+
+## 与Activity的交互
+
+### 组件获取
+
+**Fragment获得Activity中的组件:** 
+
+`getActivity().findViewById(R.id.list)；`
+**Activity获得Fragment中的组件(根据id和tag都可以)：**
+
+`getFragmentManager.findFragmentByid(R.id.fragment1);`
+
+**Fragment中获取Fragment中组件**
+
+```java
+View inflate = inflater.inflate(R.layout.fragment_test, container, false);
+inflate.findViewById(R.id.fragment_get_data);
+```
+
+### 数据传递
+
+**Activit传递数据给Fragment:**
+
+1. 在Activity中创建Bundle数据包,
+2. 调用Fragment实例的`setArguments(bundle)` 从而将Bundle数据包传给Fragment,
+3. 然后Fragment中调用`getArguments`获得 Bundle对象,然后进行解析就可以了
+
+```java
+        Bundle bundle = new Bundle();
+        bundle.putString("data","这里是activity");
+        mTestFragment.setArguments(bundle);
+/*-------------Fragment-------------------------*/
+             Bundle arguments = getArguments();
+                String data = arguments.getString("data");
+                Log.d(TAG, "onClick: data ==>> "+data);
+```
+
+
+
+**Fragment传递数据给Activity**
+
+1. 在Fragment中定义一个内部回调接口,
+2. 再让包含该Fragment的Activity实现该回调接口, 
+3. Fragment就可以通过回调接口传数据了,回调,相信很多人都知道是什么玩意,
+
+:定义一个回调接口:(Fragment中)
+
+```java
+    public interface Callback{
+       public void getResult(String data);
+    }
+
+```
+
+接口回调（Fragment中）
+
+````java
+    public void getData(Callback callback){
+        callback.getResult("Fragment收到");
+    }
+````
+
+使用接口回调方法读数据(Activity中)
+
+````java
+ mTestFragment.getData(new TestFragment.Callback() {
+            @Override
+            public void getResult(String data) {
+                Log.d(TAG, "getResult: data-->>"+data);
+            }
+        });
+````
+
+
+
+**Fragment与Fragment之间的数据互传**
+
+找到要接受数据的fragment对象,直接调用setArguments传数据进去就可以了 通常的话是`replace`时,即fragment跳转的时候传数据的,那么只需要在初始化要跳转的Fragment 后调用他的setArguments方法传入数据即可!
+如果是两个Fragment需要即时传数据,而非跳转的话,就需要先在Activity获得f1传过来的数据, 再传到f2了,就是以Activity为媒介
+
+```java
+FragmentManager fManager = getSupportFragmentManager( );
+FragmentTransaction fTransaction = fManager.beginTransaction();
+Fragmentthree t1 = new Fragmentthree();
+Fragmenttwo t2 = new Fragmenttwo();
+Bundle bundle = new Bundle();
+bundle.putString("key",id);
+t2.setArguments(bundle); 
+fTransaction.add(R.id.fragmentRoot, t2, "~~~");  
+fTransaction.addToBackStack(t1);  
+fTransaction.commit(); 
+```
+
+
+

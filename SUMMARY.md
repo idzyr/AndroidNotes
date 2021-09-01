@@ -50,6 +50,7 @@
   * [TabHost【选项卡】](./controls/tab_host.md)
   * [ViewFlipper](./controls/view_flipper.md)
   * [RecyclerView](./controls/recycler_view.md)
+  * [ViewPage](./controls/view_page.md)
 * 布局
   * [LinearLayout【线性布局】](./layout/linear_layout.md)
   * [RelativeLayout【相对布局】](./layout/relative_layout.md)
