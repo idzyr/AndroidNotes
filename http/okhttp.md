@@ -8,6 +8,12 @@ GitHub；https://github.com/square/okhttp
 
 okhttp 是一个第三方网络请求框架其扮演者一个浏览器的角色。
 
+**okio;**
+
+GitHub；https://github.com/square/okio
+
+https://square.github.io/okio/
+
 > **注意；**
 >
 > 1. OkHttp的4.0.x版本已经全部由`java`替换到了`Kotlin`，API的一些使用也会有些不同，具体的参考[Upgrading to OkHttp 4](https://links.jianshu.com/go?to=https%3A%2F%2Fsquare.github.io%2Fokhttp%2Fupgrading_to_okhttp_4%2F)
@@ -36,8 +42,8 @@ OkHttp在`3.13.x`以上的版本需要在Android 5.0+ (API level 21+)和Java 1.8
 ### 使用Gradle集成
 
 ```groovy
-implementation 'com.squareup.okhttp3:okhttp:3.14.9"
-implementation 'com.squareup.okio:okio:1.17.5"
+implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+implementation 'com.squareup.okio:okio:1.17.5'
 ```
 
 ### 使用AS工具集成 
