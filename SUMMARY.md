@@ -89,4 +89,6 @@
 * 实用
   * [相关信息获取](./utils/getting-information.md)
 * 设计思想
+  * [简易网络框架](design-ideas/simple-web-framework.md)
 * [附件](./appendix/index.md)
+
