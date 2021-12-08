@@ -5,6 +5,8 @@
 ## 流程图
 - [Activity生命周期.vsdx](./Activity生命周期.vsdx)
 
+## UML类图
+- [通用网络框架类图.vsdx](./通用网络框架类图.vsdx)
 
 
 
