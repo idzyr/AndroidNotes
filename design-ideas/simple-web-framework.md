@@ -123,6 +123,7 @@ import okhttp3.Request;
 
 /*负责生成请求对象*/
 public class CommonRequest {
+        private static final MediaType FILE_TYPE = MediaType.parse("application/octet-stream");
     /**
      * 创建Get请求的Request
      *
@@ -689,8 +690,9 @@ public class CommonJsonCallback implements Callback {   //实现okhttp 回调接
                         }
                     }
                 } else { //将服务端返回的异常回调到应用层去处理
-                    mListener.onFailure(new OkHttpException(OTHER_ERROR, result.get(RESULT_CODE)));
-                }
+                   if (result.has(ERROR_MSG)) {
+                        mListener.onFailure(new NetHttpException(OTHER_ERROR, result.opt(ERROR_MSG)));
+                    }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -812,8 +814,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 /**********************************************************
- * @文件名称：CommonFileCallback.java
- * @文件作者：renzhiqiang
  * @创建时间：2016年1月23日 下午5:32:01
  * @文件描述：专门处理文件下载回调
  * @修改历史：2016年1月23日创建初始版本
