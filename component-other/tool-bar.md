@@ -420,3 +420,52 @@ actionBar.show();// 通过show()方法显式
    ```
 
 ![image-20191130143723091](tool-bar-images/image-20191130143723091.png)
+
+## 问题
+
+### java.lang.IllegalStateException:
+
+**问题详情；**
+
+```
+>>> 原文；
+Caused by: java.lang.IllegalStateException: This Activity already has an action bar supplied by the window decor. Do not request Window.FEATURE_SUPPORT_ACTION_BAR and set windowActionBar to false in your theme to use a Toolbar instead.
+>>>> 翻译；
+原因：java.lang.IllegalStateException：此活动已经有一个由窗口装饰提供的操作栏。 不要在主题中请求 Window.FEATURE_SUPPORT_ACTION_BAR 并将 windowActionBar 设置为 false 以使用工具栏。
+
+```
+
+**解决问题；**
+
+1. 在当前使用的主题内添加
+
+   旧版路径；`app/src/main/res/values/styles.xml.`
+
+   新版路径；`app/src/main/res/values/themes.xml`
+
+   ```xml
+   <item name="windowActionBar">false</item> 
+   ```
+
+2. 如果您Activity继承自的`AppCompatActivity`是 22.1 或更高版本的支持库，请还需要添加以下行：
+
+   ```xml
+   <item name="windowNoTitle">true</item>
+   ```
+
+3. 最终更改后效果
+
+```xml
+<!-- Base application theme. -->
+<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+</style>
+```
+
+
+
