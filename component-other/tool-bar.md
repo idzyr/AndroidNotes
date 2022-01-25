@@ -292,7 +292,7 @@ overflow中的按钮默认是不显示图标的，它由MenuBuilder这个类的`
 <style name="AppTheme.ToolBar" parent="AppTheme">
         <!--ToolBar 字体颜色改为白色 -->
         <item name="titleTextColor">@android:color/white</item>
-        <!-- 溢出菜单图标颜色 -->
+        <!-- 溢出菜单图标颜色 包含默认导航按钮颜色在内-->
         <item name="colorControlNormal">@android:color/white</item>
         <!-- 右侧溢出菜单图标自定义 -->
         <item name="actionOverflowButtonStyle">@style/ActionButton.Overflow</item>
