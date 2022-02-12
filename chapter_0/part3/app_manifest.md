@@ -67,16 +67,16 @@ AndroidManifest.xml【清单文件】
 >
 > 1. 值中起始的`.`所代表的是当前app的package路径如`top.miku.helloworld`在我们需要指定某类的完整路径是就可以省略这么长的包名直接使用`.`来代替。
 
-| 属性名称            | 作用                         | 可选值     |
-| ------------------- | ---------------------------- | ---------- |
-| android:allowBackup | 是否允许系统备份此应用和数据 | Boolean    |
-| android:icon        | app icon                     | @mipmap/xx |
-| android:roundIcon   | 圆形App icon                 | @mipmap/xx |
-| android:supportsRtl | 是否支持从右到左显示app      | Boolean    |
-|                     |                              |            |
-|                     |                              |            |
-|                     |                              |            |
-|                     |                              |            |
+| 属性名称             | 作用                         | 可选值     |
+| -------------------- | ---------------------------- | ---------- |
+| android:allowBackup  | 是否允许系统备份此应用和数据 | Boolean    |
+| android:icon         | app icon                     | @mipmap/xx |
+| android:roundIcon    | 圆形App icon                 | @mipmap/xx |
+| android:supportsRtl  | 是否支持从右到左显示app      | Boolean    |
+| usesCleartextTraffic | 是否允许明文传输             | Boolean    |
+| android:label        | 应用名称/f活动名称           | String     |
+|                      |                              |            |
+|                      |                              |            |
 
 
 
