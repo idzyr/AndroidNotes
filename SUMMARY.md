@@ -68,6 +68,7 @@
 * [Intent【意图】](./intent/intent.md)
 * 四大组件
   * [Activity【活动】](./component/activity.md)
+  * [BroadcastReceiver【广播接收者】](./component/broadcast-receiver.md)
   * [Service【服务】](./component/service.md)
 * [Fragment【碎片】](./fragment/fragment.md)
 * 绘画
