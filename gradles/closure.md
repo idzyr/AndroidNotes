@@ -1,12 +1,4 @@
-# 语法
-
-> **参考；**
->
-> 《Gradle 入门--只此一篇》https://www.jianshu.com/p/001abe1d8e95
-
-Gradle是一种声明式的构建工具。Gradle向我们提供了一整套DSL，所以在很多时候我们写的代码似乎已经脱离了groovy，但是在底层依然是执行的groovy所以很多语法还是Groovy的语法规则。
-
-
+# 闭包
 
 ## 阶段闭包
 
@@ -73,9 +65,9 @@ dependencies {
 | buildToolsVersion | string | 用于指定项目构建工具的版本           |
 |                   |        |                                      |
 
-### defaultConfig闭包
+### defaultConfig
 
-用于默认配置
+用于默认配置，无论是**release**还是**debug**都会执行的部分
 
 | 名称             | 类型   | 作用                                                   |
 | ---------------- | ------ | ------------------------------------------------------ |
@@ -87,7 +79,11 @@ dependencies {
 |                  |        |                                                        |
 |                  |        |                                                        |
 
-### buildTypes 闭包
+### signingConfigs 
+
+签名闭包
+
+### buildTypes
 
 用于指定app构建相关配置
 
@@ -96,13 +92,21 @@ dependencies {
 - debug闭包用于指定生成测试版安装文件的配置，
 - release闭包用于指定生成正式版安装文件的配置。另外，debug闭包是可以忽略不写的。
 
-#### release 闭包
+以下内容适用于debug和release以release为例
+
+#### release 
 
 | 名称          | 类型    | 作用                             |
 | ------------- | ------- | -------------------------------- |
 | minifyEnabled | Boolean | 用于指定是否对项目的代码进行混淆 |
 | proguardFiles |         | 用于指定混淆时使用的规则文件     |
 |               |         |                                  |
+
+
+
+
+
+
 
 ### dependencies 闭包
 
@@ -114,9 +118,14 @@ dependencies {
 2. 库依赖可以对项目中的库模块添加依赖关系
 3. 远程依赖则可以对jcenter库上的开源项目添加依赖关系.
 
+### manifestPlaceholders
 
+清单文件配置占位符，支持插值字符串。
 
 ## 其它声明
+
+- `applicationIdSuffix`  在applicationId值后面追加内容
+- 
 
 
 
