@@ -19,7 +19,8 @@ Android内置webkit内核的高性能浏览器,而WebView则是在这个基础�
 | --------------- | ------------------------------------------------------------ |
 | WebChromeClient | 辅助WebView处理Javascript的对话框、网站图标、网站title、加载进度等！ |
 | WebViewClient   | 辅助WebView处理各种通知与请求事件！                          |
-| WebSettings     | WebView相关配置的设置，比如`setJavaScriptEnabled()`设置是否允许JS脚本执行 |
+| WebSettings     | WebView相关配置的设置，                                      |
+| CookieManager   | cookie数据管理                                               |
 
 ### WebChromeClient
 
@@ -54,6 +55,39 @@ Android内置webkit内核的高性能浏览器,而WebView则是在这个基础�
 
 ### WebSettings
 
+**方法；**
+
+- `setJavaScriptEnabled()`设置是否允许JS脚本执行
+- `setUseWideViewPort(true)` 设置 WebView 是应该启用对“viewport”HTML 元标记的支持还是应该使用宽视口。
+- `setLoadWithOverviewMode(true)` 自适应屏幕
+-  `setBuiltInZoomControls(true)`  设置 WebView 是否应使用其内置的缩放机制。
+- `setDisplayZoomControls(false)` 设置 WebView 在使用内置缩放机制时，是否应显示屏幕缩放控件
+- `setSupportZoom(true)` 设置 WebView 是否应支持使用其屏幕缩放控件和手势进行缩放。
+- `setInitialScale(int s)` 自定义缩放比例 25%，最小缩放等级
+- `setTextZoom(int)` 只缩放文本 Android自带五个可选字体大小的值：SMALLEST(50%),SMALLER(75%),NORMAL(100%),LARGER(150%), LARGEST(200%)。
+
+### CookieManager
+
+- `setAcceptCookie (boolean accept)` 设置应用程序的 WebView 实例是否应该发送和接受 cookie。
+
+- `setCookie(String url, String value)` 为给定的 URL 设置单个 cookie（键值对）。
+- `flush()` 确保当前可通过 getCookie API 访问的所有 cookie 都写入持久存储。是在API21以后CookieSyncManager类中sync()方法的替代。
+
+## WebViewAPI
+
+**属性；**
+
+
+
+**方法；**
+
+- `setHorizontalScrollBarEnabled()` 设置是否启用水平滚动条
+- `setVerticalScrollBarEnabled()` 设置是否启用垂直滚动条
+- `setScrollBarStyle();` 滚动条显示方式
+  - View.SCROLLBARS_OUTSIDE_OVERLAY  滚动条在WebView内侧显示
+  - View.SCROLLBARS_INSIDE_OVERLAY 滚动条在WebView外侧显示
+- 
+
 - `getSettings()`	返回一个WebSettings对象,用来控制WebView的属性设置
 - `loadUrl(String url)`	加载指定的Url
 - `loadData(String data,String mimeType,String encoding)`	加载指定的Data到WebView中.使用"data:"作为标记头,该方法不能加载网络数据.其中mimeType为数据类型如:textml,image/jpeg. encoding为字符的编码方式
@@ -61,13 +95,34 @@ Android内置webkit内核的高性能浏览器,而WebView则是在这个基础�
 - `setWebViewClient(WebViewClient client)`	为WebView指定一个WebViewClient对象.WebViewClient可以辅助WebView处理各种通知,请求等事件。
 - `setWebChromeClient(WebChromeClient client)`	为WebView指定一个WebChromeClient对象,WebChromeClient专门用来辅助WebView处理js的对话框,网站title,网站图标,加载进度条等
 
-
+- `reload()` 重新加载页面
+- `setScrollY(int value)` 设置滚动条Y轴值
+- `boolean canGoBack()` 当前页面是否可以回退，可以回退则为true
+- `goBack()` 让网页后退
 
 **三个load方法的区别：**
 
 - `loadUrl()`直接显示网页内容(单独显示网络图片)，一般不会出现乱码。
--  `loadData(data, "text/html", "UTF-8")`用来加载URI格式的数据，不能通过网络来加载内容， 不能加载图片，而且经常会遇到乱码的问题，我们知道String类型的数据主要是Unicode编码的， 而WebView一般为了节省资源使用的是UTF-8编码，尽管我们按上面写了，但是还需要为webView设置： `webview.getSettings().setDefaultTextEncodingName("UTF -8");` 
+- `loadData(data, "text/html", "UTF-8")`用来加载URI格式的数据，不能通过网络来加载内容， 不能加载图片，而且经常会遇到乱码的问题，我们知道String类型的数据主要是Unicode编码的， 而WebView一般为了节省资源使用的是UTF-8编码，尽管我们按上面写了，但是还需要为webView设置： `webview.getSettings().setDefaultTextEncodingName("UTF -8");` 
 - `loadDataWithBaseURL(baseUrl, string, "text/html", "utf-8", null)：`loadData类的一个 增强类，可以加载图片，baseUrl为你存储的图片路径，而且只需在这里设置utf-8就可以解决乱码 问题了！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
