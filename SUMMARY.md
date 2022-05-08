@@ -94,6 +94,7 @@
 * 拓展
   * [字体图标](./expands/font-icon.md)
   * [Bugly异常上报等](./expands/bugly.md)
+  * [阿里热修复（sophix ）](./expands/sophix.md)
 * 实用
   * [相关信息获取](./utils/getting-information.md)
 * 设计思想
