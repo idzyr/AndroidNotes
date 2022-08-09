@@ -24,7 +24,7 @@
   * 工具
     * [Logcat日志](./android-studio/tools/logcat.md)
   * [快捷键](./android-studio/hot-key.md)
-  * 
+  * [配置](android-studio/settings.md)
 * 发布应用
   * [为应用签名](./release/signature.md)
   *   
@@ -91,6 +91,8 @@
 * JSON&XML
   * [XML](./xml&json/xml-data.md)
   * [JSON](./xml&json/json-data.md)
+* 自定义控件
+  * [概览](./custom_control/overview.md)
 * 拓展
   * [字体图标](./expands/font-icon.md)
   * [Bugly异常上报等](./expands/bugly.md)
