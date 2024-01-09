@@ -28,4 +28,11 @@
 
 AS默认创建的模拟器会存放到以下路径`C:\Users\%USERNAME%\.android\avd`要更改路径可以把镜像文件移动到其它路径然后修改**配置文件**中的`Path`的值为镜像的路径即可.
 
+```
+avd.ini.encoding=UTF-8
+path=D:\Android\avds\Pixel_2_API_25.avd
+path.rel=avd\Pixel_2_API_25.avd
+target=android-25
+```
+
 ![1566225967852](images/1566225967852.png)![1566225143587](images/1566225143587.png)
