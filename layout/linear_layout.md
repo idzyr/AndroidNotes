@@ -16,7 +16,7 @@ LinearLayout又称作线性布局，是一种非常常用的布局。正如它�
 
 | 属性                   | 作用                                                         | 值                                          |
 | ---------------------- | ------------------------------------------------------------ | ------------------------------------------- |
-| android:layout_gravity | 指定布局中的控件对齐方式                                     | top、right、bottom、left、center等 可以用‘\ |
+| android:layout_gravity | 设置控件在其父控件中的对齐方式                                    | top、right、bottom、left、center等 可以用‘\ |
 | android:orientation    | 指定控件排放方向                                             | 默认vertical【垂直】horizontal【水平】      |
 | android:layout_weight  | 允许我们使用比例的方式来指定控件的大小（权重，类似于CSS中的弹性盒子）注意是分配父控件的剩余空间。 | 数值                                        |
 

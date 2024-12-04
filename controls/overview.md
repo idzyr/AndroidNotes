@@ -10,7 +10,7 @@
 | android:layout_width  | 指定了控件的宽度                                             | 推荐[match_parent]("表示让当前控件的大小和父布局的大小一样") [fill_parent]("表示让当前控件的大小和父布局的大小一样") [wrap_content]("表示让当前控件的大小能够刚好包含住里面的内容") |
 | android:layout_height | 指定了控件的高度                                             | 推荐[match_parent]("表示让当前控件的大小和父布局的大小一样") [fill_parent]("表示让当前控件的大小和父布局的大小一样") [wrap_content]("表示让当前控件的大小能够刚好包含住里面的内容") |
 | android:textAllCaps   | 文本内容全部大写【默认true】                                 | true / false                                                 |
-| android:gravity       | 指定文字对齐方式                                             | top、right、bottom、left、center等 可以用 &#124; 指定多个值。    |
+| android:gravity       | 设置控件中内部内容对齐方式（如TextView文本位置）常用用于TextView、Button、ImageView                                             | top、right、bottom、left、center等 可以用 &#124; 指定多个值。    |
 | android:textSize      | 指定文字的大小                                               | sp位单位                                                     |
 | android:textColor     | 指定文字颜色                                                 | 支持十六位颜色代码                                           |
 | android:background    | 指定背景色                                                   | 支持十六位颜色代码                                           |
